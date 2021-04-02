@@ -16,6 +16,7 @@ const findOrCreate = require('mongoose-findorcreate');
 const app = express();
 app.use(cookieParser());
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -99,6 +100,7 @@ app.post("/register", function(req, res){
 })
 
 app.post("/login", function(req, res){
+  console.log(req.body);
   const user = new User({
     username: req.body.username,
     password: req.body.password
