@@ -122,6 +122,16 @@ app.get("/profile", (req, res) => {
   res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
 });
 
+app.get("/products", (req, res) => {
+  Product.find({}, function(err, products){
+    if (err){
+      console.log(err);
+    }
+    res.send(products);
+  })
+});
+
+
 
 app.listen(process.env.PORT || 5000, function(){
   console.log("Server started on port 5000");
