@@ -11,6 +11,7 @@ import Moodboard from "./pages/moodboard/Moodboard";
 import Login from "./pages/login/Login";
 import Main from "./pages/main/Main";
 import Profile from "./pages/profile/Profile";
+import Signup from "./pages/signup/Signup";
 
 function App() {
   return (
@@ -20,6 +21,9 @@ function App() {
         <Switch>
           <Route path="/login">
             <Login />
+          </Route>
+          <Route path="/signup">
+            <Signup />
           </Route>
           <Route path="/profile">
             <Profile />
