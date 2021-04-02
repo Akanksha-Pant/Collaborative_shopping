@@ -10,6 +10,7 @@ import Footer from "./components/footer/Footer";
 import Moodboard from "./pages/moodboard/Moodboard";
 import Login from "./pages/login/Login";
 import Main from "./pages/main/Main";
+import Profile from "./pages/profile/Profile";
 
 function App() {
   return (
@@ -20,9 +21,13 @@ function App() {
           <Route path="/login">
             <Login />
           </Route>
+          <Route path="/profile">
+            <Profile />
+          </Route>
           <Route path="/">
             <Main />
-          </Route>        </Switch>
+          </Route>        
+        </Switch>
       </Router>
       <Footer />
     </div>
