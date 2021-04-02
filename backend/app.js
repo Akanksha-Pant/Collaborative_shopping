@@ -8,6 +8,7 @@ const passportLocalMongoose = require('passport-local-mongoose');
 const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const LocalStrategy = require('passport-local').Strategy;
+const cors = require('cors')
 
 const findOrCreate = require('mongoose-findorcreate');
 
@@ -18,6 +19,13 @@ app.use(cookieParser());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
+
+app.use(
+  cors({
+    origin: "http://localhost:3000", // <-- location of the react app were connecting to
+    credentials: true,
+  })
+);
 
 
 const uri = process.env.ATLAS_URI;
