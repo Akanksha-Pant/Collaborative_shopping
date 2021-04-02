@@ -16,6 +16,7 @@ const findOrCreate = require('mongoose-findorcreate');
 const app = express();
 app.use(cookieParser());
 
+app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({
   extended: true
 }));
@@ -99,6 +100,7 @@ app.post("/register", function(req, res){
 })
 
 app.post("/login", function(req, res){
+  console.log(req.body);
   const user = new User({
     username: req.body.username,
     password: req.body.password
@@ -115,6 +117,20 @@ app.post("/login", function(req, res){
     }
   })
 });
+
+app.get("/profile", (req, res) => {
+  res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+});
+
+app.get("/products", (req, res) => {
+  Product.find({}, function(err, products){
+    if (err){
+      console.log(err);
+    }
+    res.send(products);
+  })
+});
+
 
 
 app.listen(process.env.PORT || 5000, function(){

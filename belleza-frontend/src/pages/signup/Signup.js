@@ -1,9 +1,9 @@
-import './login.css';
+import '../login/login.css';
 import { Form, Input, Button } from "antd";
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from "@ant-design/icons"
 import axios from "axios";
 
-function Login() {
+function Signup() {
 
   const submitForm = (values) => {
     console.log(values);
@@ -14,7 +14,7 @@ function Login() {
         password: values.password
       },
       withCredentials: true,
-      url: "http://localhost:5000/login"
+      url: "http://localhost:5000/register"
     }).then((res) => console.log(res));
   }
   const submitFormFailed = (error) => {
@@ -46,14 +46,11 @@ function Login() {
             />
            </Form.Item>
            <Form.Item>
-             <Button style={{ background: "#c264ff", borderColor: "purple" }} type="primary" htmlType="submit">Login</Button>
+             <Button style={{ background: "#c264ff", borderColor: "purple" }} type="primary" htmlType="submit">Signup</Button>
            </Form.Item>
           </Form>
-          <Button style={{ color: "mauve"}}  type="link" htmlType="button">
-              Create new account
-          </Button>
       </div>
     );
   }
 
-export default Login;
+export default Signup;
