@@ -4,16 +4,18 @@ import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from "@ant-design/icon
 import axios from "axios";
 
 function Login() {
+
   const submitForm = (values) => {
+    console.log(values);
     axios({
-      method: "post",
+      method: "POST",
       data: {
         username: values.username,
         password: values.password
       },
       withCredentials: true,
       url: "http://localhost:5000/login"
-    })
+    }).then((res) => console.log(res));
   }
   const submitFormFailed = (error) => {
     console.error(error);
@@ -38,7 +40,7 @@ function Login() {
              rules={[
               { required:true, message: "Please input password!" }
             ]}>
-            <Input.Password 
+            <Input.Password
               placeholder="password"
               iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
@@ -46,12 +48,12 @@ function Login() {
            <Form.Item>
              <Button style={{ background: "#c264ff", borderColor: "purple" }} type="primary" htmlType="submit">Login</Button>
            </Form.Item>
-          </Form>    
+          </Form>
           <Button style={{ color: "mauve"}}  type="link" htmlType="button">
               Create new account
           </Button>
       </div>
     );
   }
-  
+
 export default Login;
