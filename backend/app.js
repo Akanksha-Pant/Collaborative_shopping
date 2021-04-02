@@ -42,10 +42,18 @@ const userSchema = new mongoose.Schema({
   password: String
 });
 
+const productSchema = new mongoose.Schema({
+  name: String,
+  image: String,
+  price: Number,
+  description: String
+});
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model("User", userSchema);
+const Product = new mongoose.model("Product", productSchema);
 
 passport.use('user-local', new LocalStrategy(User.authenticate()));
 
