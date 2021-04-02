@@ -1,0 +1,9 @@
+.Login {
+    max-width: 250px;
+    margin: 0 auto;
+    /* display: grid; */
+    /* row-gap: 10%; */
+}
+.Login > * {
+    margin-top:20px;
+}
