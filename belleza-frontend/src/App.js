@@ -12,6 +12,7 @@ import Login from "./pages/login/Login";
 import Main from "./pages/main/Main";
 import Profile from "./pages/profile/Profile";
 import Signup from "./pages/signup/Signup";
+import FindFriend from "./pages/findFriend/FindFriend";
 
 function App() {
   return (
@@ -28,9 +29,13 @@ function App() {
           <Route path="/profile">
             <Profile />
           </Route>
-          <Route path="/">
+          <Route path="/findfriend">
+            <FindFriend />
+          </Route>
+          <Route exact path="/">
             <Main />
-          </Route>        
+          </Route> 
+          <Route path="">error page</Route>       
         </Switch>
       </Router>
       <Footer />
