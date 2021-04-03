@@ -7,10 +7,11 @@ import {
 // components
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-import Moodboard from "./pages/moodboard/Moodboard";
+import ProductPage from "./pages/ProductPage/ProductPages";
 import Login from "./pages/login/Login";
 import Main from "./pages/main/Main";
 import Profile from "./pages/profile/Profile";
+//import ProductPage from "./pages/productPage/ProductPage";
 import Signup from "./pages/signup/Signup";
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
       <Header />
       <Router>
         <Switch>
+          <Route path = "/details/:id"><ProductPage /></Route>
           <Route path="/login">
             <Login />
           </Route>
