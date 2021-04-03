@@ -31,15 +31,23 @@ app.use(
 
 const uri = process.env.ATLAS_URI;
 
-mongoose.connect(uri, {useNewUrlParser: true, useUnifiedTopology: true, useFindAndModify: false})
+mongoose.connect(uri, {
+  useNewUrlParser: true,
+  useUnifiedTopology: true,
+  useFindAndModify: false
+})
 mongoose.set("useCreateIndex", true);
 
 app.use(session({
   secret: process.env.SECRET,
   saveUninitialized: false,
   resave: false,
-  cookie: { maxAge: 180 * 60 * 1000},
-  store: new MongoStore({ mongooseConnection: mongoose.connection })
+  cookie: {
+    maxAge: 180 * 60 * 1000
+  },
+  store: new MongoStore({
+    mongooseConnection: mongoose.connection
+  })
 
 }));
 
@@ -48,7 +56,9 @@ app.use(passport.session());
 
 const userSchema = new mongoose.Schema({
   username: String,
-  password: String
+  password: String,
+  friends: Array,
+  requests: Array
 });
 
 const productSchema = new mongoose.Schema({
@@ -71,46 +81,46 @@ passport.serializeUser(function(user, done) {
 });
 
 passport.deserializeUser(function(user, done) {
-  if(user != null)
+  if (user != null)
     done(null, user);
 });
 
 
-app.get("/", function(req, res){
+app.get("/", function(req, res) {
   res.send("Hello")
 })
 
 
-app.post("/register", function(req, res){
+app.post("/register", function(req, res) {
   console.log(req.body);
   User.register({
-    username: req.body.username
-  },
-  req.body.password, function(err, user){
-    if (err){
-      console.log(err);
-      res.redirect("/register");
-    } else{
-      passport.authenticate("user-local")(req, res, function(){
-        console.log("Successfully registered");
-        res.send("Successfully Registered");
-      })
-    }
-  })
+      username: req.body.username
+    },
+    req.body.password,
+    function(err, user) {
+      if (err) {
+        console.log(err);
+        res.redirect("/register");
+      } else {
+        passport.authenticate("user-local")(req, res, function() {
+          console.log("Successfully registered");
+          res.send("Successfully Registered");
+        })
+      }
+    })
 })
 
-app.post("/login", function(req, res){
+app.post("/login", function(req, res) {
   console.log(req.body);
   const user = new User({
     username: req.body.username,
     password: req.body.password
   });
-  req.login(user, function(err){
-    if (err){
+  req.login(user, function(err) {
+    if (err) {
       console.log(err);
-    }
-    else{
-      passport.authenticate("user-local")(req, res, function(){
+    } else {
+      passport.authenticate("user-local")(req, res, function() {
         console.log("Successfully logged in!");
         res.send("Logged in");
       })
@@ -123,16 +133,132 @@ app.get("/profile", (req, res) => {
 });
 
 app.get("/products", (req, res) => {
-  Product.find({}, function(err, products){
-    if (err){
+  Product.find({}, function(err, products) {
+    if (err) {
       console.log(err);
     }
     res.send(products);
   })
 });
 
+app.get("/search", (req, res) => {
+  User.find({}, function(err, users) {
+    if (err) {
+      console.log(err);
+    }
+    res.send(users);
+  })
+});
+
+app.get("/request/:to/:from", function(req, res) {
+  console.log(req.params);
+  const to = req.params.to;
+  const from = req.params.from;
+  console.log(to, from);
+  User.find({
+    _id: from
+  }, function(err, fromUser) {
+    if (err) {
+      console.log(err);
+    } else {
+      fromUser = fromUser[0];
+      console.log(fromUser);
+      const newRequest = {
+        _id: fromUser._id,
+        username: fromUser.username
+      };
+      console.log(newRequest);
+      User.findOneAndUpdate({
+        _id: to
+      }, {
+        $push: {
+          requests: newRequest
+        }
+      }, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Request saved successfully.");
+        }
+      })
+    }
+  })
+})
+
+app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
+  console.log(req.params);
+  const to = req.params.toId;
+  const from = req.params.fromId;
+  const toName = req.params.toName;
+  const fromName = req.params.fromName;
+  const fromFriend = {
+    name: fromName,
+    _id: from
+  };
+  const toFriend = {
+    name: toName,
+    _id: to
+  }
+  console.log(toFriend);
+  console.log(fromFriend);
+
+  User.findOneAndUpdate({
+    _id: to
+  }, {
+    $push: {
+      friends: fromFriend
+    }
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("friend saved successfully.");
+      User.findOneAndUpdate({
+        _id: from
+      }, {
+        $push: {
+          friends: toFriend
+        }
+      }, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("friend saved successfully.");
+        }
+      })
+    }
+  })
 
 
-app.listen(process.env.PORT || 5000, function(){
+})
+
+app.get("/delete/:to/:from", function(req, res){
+  const to = req.params.to;
+  const from = req.params.from;
+  console.log(to, from);
+  User.find({_id: to}, function(err, user){
+
+
+      requests = user[0].requests;
+      console.log(requests);
+      requests = requests.filter(function(request){
+        return (request._id != from);
+      })
+      console.log(requests);
+
+      User.updateOne({_id: to}, {requests: requests}, function(err){
+        if (err){
+          console.log(err);
+        }
+        else{
+          console.log("Request deleted");
+
+        }
+      })
+  })
+})
+
+
+app.listen(process.env.PORT || 5000, function() {
   console.log("Server started on port 5000");
 });
