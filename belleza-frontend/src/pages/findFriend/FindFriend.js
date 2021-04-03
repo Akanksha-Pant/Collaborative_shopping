@@ -2,11 +2,13 @@ import { useState } from "react";
 import "./findfriend.css";
 import icon from "./ff-icon.png";
 import axios from "axios";
+import getCurrentUser from "./../../services/currentUser";
 import { Button, Input, List } from "antd";
 const { Search } = Input;
 
 function FindFriend() {
     const [resultUsers, setResultUsers] = useState();
+    
     const getUsers = (values) => {
         axios({
             method: "GET",
@@ -15,7 +17,17 @@ function FindFriend() {
           })
           .then((res) => setResultUsers(res.data));
     }
-    
+    const sendFriendReq = (toUser) => {
+        let fromUser = getCurrentUser();
+        console.log(toUser) 
+        console.log(fromUser) 
+        axios({
+            method: "GET",
+            withCredentials: true,
+            url: `http://localhost:5000/request/${toUser.id}/${fromUser.id}`,
+          })
+          .then((res) => setResultUsers(res.data));
+    }
     return (
       <div className="FindFriend">
          <img style={{height: "20em"}} src={icon} />
@@ -24,9 +36,9 @@ function FindFriend() {
             className="List"
             bordered
             dataSource={resultUsers}
-            renderItem={item => (
+            renderItem={user => (
             <List.Item className="ListItem">
-                {item.username} <Button type="dashed">Send Friend Request</Button>
+                {user.username} <Button onClick={() => sendFriendReq(user)} type="dashed">Send Friend Request</Button>
             </List.Item>
             )}
          />
