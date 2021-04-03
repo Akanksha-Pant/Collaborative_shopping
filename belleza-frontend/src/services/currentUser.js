@@ -1,18 +1,15 @@
 import axios from "axios";
 
 async function getCurrentUser() {
-    let response;
-    await axios({
+
+    const response = await axios({
         method: "GET",
         withCredentials: true,
         url: "http://localhost:5000/profile"
       })
-      .then((res) => {
-          response = res.data;
-          return res.data;
-        })
+      console.log(response.data);
     // let response = await res.json();
-    return response;
+    return response.data;
     //   console.log(res)
       // .then((res) => {
           // currentUser = res.data;

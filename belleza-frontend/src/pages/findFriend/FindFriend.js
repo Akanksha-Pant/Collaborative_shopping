@@ -8,7 +8,7 @@ const { Search } = Input;
 
 function FindFriend() {
     const [resultUsers, setResultUsers] = useState();
-    
+
     const getUsers = (values) => {
         axios({
             method: "GET",
@@ -17,14 +17,18 @@ function FindFriend() {
           })
           .then((res) => setResultUsers(res.data));
     }
+    let fromUser = {};
     const sendFriendReq = (toUser) => {
-        let fromUser = getCurrentUser();
-        console.log(toUser) 
-        console.log(fromUser) 
+        getCurrentUser().then((data) => {
+          fromUser = data;
+
+        });
+        console.log(toUser)
+        console.log(fromUser)
         axios({
             method: "GET",
             withCredentials: true,
-            url: `http://localhost:5000/request/${toUser.id}/${fromUser.id}`,
+            url: `http://localhost:5000/request/${toUser._id}/${fromUser._id}`,
           })
           .then((res) => setResultUsers(res.data));
     }
@@ -45,5 +49,5 @@ function FindFriend() {
       </div>
     );
   }
-  
+
 export default FindFriend;
