@@ -131,6 +131,14 @@ app.get("/products", (req, res) => {
   })
 });
 
+app.get("/search", (req, res) => {
+  User.find({}, function(err, users){
+    if (err){
+      console.log(err);
+    }
+    res.send(users);
+  })
+});
 
 
 app.listen(process.env.PORT || 5000, function(){
