@@ -17,12 +17,8 @@ function FindFriend() {
           })
           .then((res) => setResultUsers(res.data));
     }
-    let fromUser = {};
-    const sendFriendReq = (toUser) => {
-        getCurrentUser().then((data) => {
-          fromUser = data;
-
-        });
+    const sendFriendReq = async (toUser) => {
+        let fromUser = await getCurrentUser();
         console.log(toUser)
         console.log(fromUser)
         axios({
