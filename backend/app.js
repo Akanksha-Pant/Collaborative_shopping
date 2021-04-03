@@ -142,7 +142,8 @@ app.get("/products", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-  User.find({}, function(err, users) {
+    const username = (req.query.username)
+    User.find({ 'username': username }, function(err, users) {
     if (err) {
       console.log(err);
     }

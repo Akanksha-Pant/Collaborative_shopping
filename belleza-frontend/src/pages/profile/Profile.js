@@ -1,18 +1,13 @@
 import axios from "axios";
 import { useState } from "react";
+import getCurrentUser from "./../../services/currentUser";
 
 function Profile() {
     const [username, setUsername] = useState("none");
 
-    function getUserData() {
-        axios({
-            method: "GET",
-            withCredentials: true,
-            url: "http://localhost:5000/profile"
-          }).then((res) => {
-              console.log(res)
-              setUsername(res.data.username);
-          });
+    async function getUserData() {
+      let currentUser = await getCurrentUser();
+      setUsername(currentUser.username);
     }
     return (
       <div>

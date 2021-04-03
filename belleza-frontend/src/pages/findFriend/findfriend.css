@@ -1,0 +1,20 @@
+.FindFriend {
+    width: 80%;
+    max-width: 600px;
+    margin: 0 auto;
+}
+.List {
+    margin-top: 3%;
+}
+.ListItem {
+    display: grid;
+    grid-template-columns: 4fr 1fr;
+    text-align: left;
+}
+.ListItem > text {
+    text-align: left;
+}
+.ListItem > Button {
+    margin-right: 0;
+    text-align: right;
+}
