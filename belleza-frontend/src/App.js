@@ -14,6 +14,7 @@ import Profile from "./pages/profile/Profile";
 //import ProductPage from "./pages/productPage/ProductPage";
 import Signup from "./pages/signup/Signup";
 import FindFriend from "./pages/findFriend/FindFriend";
+//import Example from "./components/PopUpCards";
 
 function App() {
   return (
@@ -22,21 +23,11 @@ function App() {
       <Header />
         <Switch>
           <Route path = "/details/:id"><ProductPage /></Route>
-          <Route path="/login">
-            <Login />
-          </Route>
-          <Route path="/signup">
-            <Signup />
-          </Route>
-          <Route path="/profile">
-            <Profile />
-          </Route>
-          <Route path="/findfriend">
-            <FindFriend />
-          </Route>
-          <Route exact path="/">
-            <Main />
-          </Route> 
+          <Route path="/login"><Login /></Route>
+          <Route path="/signup"><Signup /></Route>
+          <Route path="/profile"><Profile />
+          </Route><Route path="/findfriend"><FindFriend /></Route>
+          <Route exact path="/"><Main /></Route> 
           <Route path="">error page</Route>       
         </Switch>
         <Footer />

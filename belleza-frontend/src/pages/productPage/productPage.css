@@ -4,8 +4,9 @@
   width: 1100px;
   height: 500px;
   margin-top: 40px;
-  margin-left: 15.5%;
   
+  margin-left: 15.5%;
+  position: relative;  
 }
 
 .ProductImage{
@@ -14,6 +15,7 @@
   margin-left: 30px;
   margin-top: 30px;
   margin-right: 60px;
+  margin-bottom: 50px;
   float: left; 
 }
 .ProductName h2{
@@ -70,3 +72,5 @@
   height: 50px;
   margin: 10px;
 }
+
+
