@@ -1,32 +1,56 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import './header.css';
 import { Link } from "react-router-dom";
-import { Menu, Button } from 'antd';
-import { MailOutlined, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
+import { Menu, Button, Space } from 'antd';
+import { MailOutlined, SearchOutlined, UserAddOutlined, BellOutlined } from '@ant-design/icons';
 import FriendRequest from "./../friendRequests/FriendRequest";
+import Notifications from "./../notification/Notification";
+import getCurrentUser from "./../../services/currentUser";
 // import SearchFriend from "./search-friend.jpeg"
 // const { SubMenu } = Menu;
 
 function Header() {
-  const [ current, setCurrent ] = useState("home")
+  const [ currentTab, setCurrentTab ] = useState("home")
+  const [ currentUser, setCurrentUser ] = useState()
+
+  useEffect(() => {
+    return async () => {
+      const user = await getCurrentUser(); 
+      setCurrentUser(user);
+    }
+  }, [])
   const handleClick = (e) => {
-    setCurrent(e.key);
+    setCurrentTab(e.key);
+  }
+  const currentUserDetails = () => {
+    if (!currentUser) 
+      return (
+      <Link to="/login">
+         <Button> Login</Button>
+      </Link>)
+    else
+      return (
+      <Button type="primary" shape="circle">
+        <Link to="/profile">{currentUser.username[0]}</Link>
+      </Button>)
   }
     return (
-      <div className="Header">
-          <Menu onClick={handleClick} selectedKeys={[current]} mode="horizontal">
+      <Space className="Header">
+          <Menu onClick={handleClick} selectedKeys={[currentTab]} mode="horizontal">
             <Menu.Item key="mail" icon={<MailOutlined />}>
-              Navigation
+              <Link to="/">Home</Link>
             </Menu.Item>
-              <FriendRequest />
             <Menu.Item key="findfriend" icon={<SearchOutlined />}>
               <Link to="/findfriend">
                 Find friends
               </Link>
             </Menu.Item>
+            <FriendRequest />
+            <Notifications />
+            { currentUserDetails() }            
             {/* <img style={{height: "3em"}} src={SearchFriend} /> */}
           </Menu>
-      </div>
+      </Space>
     );
   }
   

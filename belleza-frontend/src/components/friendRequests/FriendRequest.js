@@ -11,6 +11,7 @@ function FriendRequest() {
     const allFriendReq = async () => {
         let currentUser = await getCurrentUser();
         console.log(currentUser)
+        if (!currentUser) setMyFriendReq([]); 
         setMyFriendReq(currentUser.requests);
     }
     const acceptRequest = async (fromUser) => {
