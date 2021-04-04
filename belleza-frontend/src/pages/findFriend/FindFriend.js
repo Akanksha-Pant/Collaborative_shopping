@@ -8,7 +8,6 @@ const { Search } = Input;
 
 function FindFriend() {
     const [resultUsers, setResultUsers] = useState();
-
     const getUsers = (values) => {
         axios({
             method: "GET",
@@ -19,8 +18,6 @@ function FindFriend() {
     }
     const sendFriendReq = async (toUser) => {
         let fromUser = await getCurrentUser();
-        console.log(toUser)
-        console.log(fromUser)
         axios({
             method: "GET",
             withCredentials: true,

@@ -7,7 +7,7 @@ import {
 // components
 import Header from "./components/header/Header";
 import Footer from "./components/footer/Footer";
-import ProductPage from "./pages/ProductPage/ProductPages";
+import ProductPage from "./pages/productPage/ProductPages";
 import Login from "./pages/login/Login";
 import Main from "./pages/main/Main";
 import Profile from "./pages/profile/Profile";
@@ -18,8 +18,8 @@ import FindFriend from "./pages/findFriend/FindFriend";
 function App() {
   return (
     <div className="App">
-      <Header />
       <Router>
+      <Header />
         <Switch>
           <Route path = "/details/:id"><ProductPage /></Route>
           <Route path="/login">
@@ -39,8 +39,8 @@ function App() {
           </Route> 
           <Route path="">error page</Route>       
         </Switch>
+        <Footer />
       </Router>
-      <Footer />
     </div>
   );
 }

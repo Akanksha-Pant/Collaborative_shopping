@@ -1,7 +1,9 @@
 import { useState } from "react";
 import './header.css';
-import { Menu } from 'antd';
-import { MailOutlined, SearchOutlined } from '@ant-design/icons';
+import { Link } from "react-router-dom";
+import { Menu, Button } from 'antd';
+import { MailOutlined, SearchOutlined, UserAddOutlined } from '@ant-design/icons';
+import FriendRequest from "./../friendRequests/FriendRequest";
 // import SearchFriend from "./search-friend.jpeg"
 // const { SubMenu } = Menu;
 
@@ -16,11 +18,11 @@ function Header() {
             <Menu.Item key="mail" icon={<MailOutlined />}>
               Navigation
             </Menu.Item>
-            <Menu.Item key="box" icon={<MailOutlined />}>
-              Box
-            </Menu.Item>
+              <FriendRequest />
             <Menu.Item key="findfriend" icon={<SearchOutlined />}>
-              Find friends
+              <Link to="/findfriend">
+                Find friends
+              </Link>
             </Menu.Item>
             {/* <img style={{height: "3em"}} src={SearchFriend} /> */}
           </Menu>

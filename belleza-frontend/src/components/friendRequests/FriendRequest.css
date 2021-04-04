@@ -1,0 +1,5 @@
+.req-list-item {
+    display: grid;
+    grid-template-columns: 3fr 1fr;
+    padding: 4px;
+}

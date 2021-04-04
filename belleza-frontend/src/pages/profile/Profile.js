@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useState } from "react";
 import getCurrentUser from "./../../services/currentUser";
 
