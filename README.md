@@ -1,6 +1,6 @@
 # Collaborative_shopping
 
-# Installing 
+# Installing
 
 ## Front-end
 ```
@@ -8,6 +8,10 @@ cd belleza-frontend
 npm install
 ```
 ## Backend
+```
+cd backend
+npm install
+```
 
 # Run
 
@@ -18,3 +22,7 @@ npm start
 ```
 
 ## Backend
+In `backend` folder, run:
+```
+node app.js
+```

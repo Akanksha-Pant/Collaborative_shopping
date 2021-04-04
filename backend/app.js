@@ -9,6 +9,7 @@ const MongoStore = require('connect-mongo')(session);
 const cookieParser = require('cookie-parser');
 const LocalStrategy = require('passport-local').Strategy;
 const cors = require('cors')
+const axios = require('axios');
 
 const findOrCreate = require('mongoose-findorcreate');
 
@@ -170,7 +171,8 @@ app.get("/request/:to/:from", function(req, res) {
       };
       console.log(newRequest);
       User.findOneAndUpdate({
-        _id: to
+        _id: to,
+        "requests._id": { $ne: fromUser._id }
       }, {
         $push: {
           requests: newRequest
@@ -204,7 +206,8 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
   console.log(fromFriend);
 
   User.findOneAndUpdate({
-    _id: to
+    _id: to,
+    "friends._id": { $ne: from }
   }, {
     $push: {
       friends: fromFriend
@@ -215,7 +218,8 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
     } else {
       console.log("friend saved successfully.");
       User.findOneAndUpdate({
-        _id: from
+        _id: from,
+        "friends._id": { $ne: to }
       }, {
         $push: {
           friends: toFriend
@@ -225,6 +229,13 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
           console.log(err);
         } else {
           console.log("friend saved successfully.");
+          //Deleting the pending request
+
+              axios({
+                  method: "GET",
+                  withCredentials: true,
+                  url: "http://localhost:5000/delete/" + to + "/" + from
+                })
         }
       })
     }
