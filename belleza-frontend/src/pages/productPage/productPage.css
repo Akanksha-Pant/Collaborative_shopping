@@ -9,6 +9,7 @@
   position: relative;  
 }
 
+
 .ProductImage{
   width: 300px;
   height: 300px;  
@@ -72,5 +73,83 @@
   height: 50px;
   margin: 10px;
 }
+
+
+.suggestPopUp{
+  background-color: white;
+  box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+  min-width: 300px;
+  min-height: 500px;
+  max-width: 800px;
+  max-height: 800px;
+  margin-top: 7.5%;
+  margin-left: 22.5%;
+}
+
+.SuggestPopUpImage{
+  width:  300px;
+  height: 400px;
+  margin: 10px;
+  
+}
+
+.suggestPopHeader{
+  display: flex;
+  box-shadow: 2px 4px 4px 2px rgba(0,0,0,0.2);
+  height: 50px;
+  padding: 10px;
+  font-weight: bold;
+}
+
+.spacingBlock{
+  width: 75%;
+}
+
+.popUpFriendsCards{
+  margin-top: 10px;
+  margin-left: 10px;
+  width: 450px;
+  height: 60px;
+  padding: 10px;
+  text-align: start;
+  color: black;
+}
+.suggestPopBody{
+  display: flex;
+}
+
+
+.CardList{
+  height: 420px;
+  overflow-y: scroll;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
