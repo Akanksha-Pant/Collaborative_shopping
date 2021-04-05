@@ -69,11 +69,25 @@ const productSchema = new mongoose.Schema({
   description: String
 });
 
+const suggestionBoxSchema = new mongoose.Schema({
+  userId: String,
+  friendId: String,
+  friendName: String,
+  product: {
+    _id: String,
+    name: String,
+    image: String,
+    price: Number,
+    description: String
+  }
+});
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model("User", userSchema);
 const Product = new mongoose.model("Product", productSchema);
+const SuggestionBox = new mongoose.model("SuggestionBox", suggestionBoxSchema);
 
 passport.use('user-local', new LocalStrategy(User.authenticate()));
 
@@ -280,6 +294,24 @@ app.get("/delete/:to/:from", function(req, res){
 
         }
       })
+  })
+})
+
+app.post("/addSuggestion", function(req, res){
+  console.log(req.body);
+  const suggestion = new SuggestionBox({
+    userId: req.user._id,
+    friendId: req.body.id,
+    friendName: req.body.name,
+    product: req.body.product
+  })
+  suggestion.save((err) => {
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Suggestion saved successfully");
+    }
   })
 })
 
