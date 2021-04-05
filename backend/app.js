@@ -279,6 +279,20 @@ app.get("/delete/:to/:from", function(req, res){
   })
 })
 
+app.get("/logout", function(req, res){
+req.logout();
+  req.session.destroy(function(err){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("session destroyed");
+      res.redirect("/")
+    }
+  })
+})
+
+
 
 app.listen(process.env.PORT || 5000, function() {
   console.log("Server started on port 5000");
