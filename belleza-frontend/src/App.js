@@ -14,7 +14,7 @@ import Profile from "./pages/profile/Profile";
 import Signup from "./pages/signup/Signup";
 import FindFriend from "./pages/findFriend/FindFriend";
 import SuggestProduct from "./pages/suggestProduct/SuggestProduct"
-
+import SuggestionBox from "./pages/SuggestionBox/suggestionBox"
 function App() {
   return (
     <div className="App">
@@ -22,6 +22,7 @@ function App() {
       <Header />
         <Switch>
           <Route path = "/details/:id"><ProductPage /></Route>
+          <Route path = "/suggestionBox"><SuggestionBox /></Route>
           <Route path = "/suggest/:id"><SuggestProduct /></Route>
           <Route path="/login"><Login /></Route>
           <Route path="/signup"><Signup /></Route>

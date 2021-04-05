@@ -1,0 +1,49 @@
+.suggestion_box_page{
+    padding: 15px;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.suggestion_box_card{
+width: 250px;
+height: 340px;
+padding: 10px;
+box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+}
+
+.suggested_by{
+    text-align: left;
+    font-weight: bold; 
+}
+
+.suggestion_box_image{
+height: 200px;
+width: 180px;
+}
+
+.suggestion_box_description{
+text-align: left;
+}
+
+.suggestion_box_name{
+text-align: left;
+font-weight: bold;
+}
+
+.suggest_delete_btn{
+    height: 35px;
+    width: 90px;
+    border: none;
+    font-weight: bold;
+    background-color: lightgrey;
+    margin: 10px;
+}
+.suggest_view_btn{
+    height: 35px;
+    width: 90px;
+    border: none;
+    color: white;
+    font-weight: bold;
+    background-color: darkviolet;
+    margin: 10px;
+}
