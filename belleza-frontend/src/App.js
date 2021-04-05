@@ -11,10 +11,9 @@ import ProductPage from "./pages/productPage/ProductPages";
 import Login from "./pages/login/Login";
 import Main from "./pages/main/Main";
 import Profile from "./pages/profile/Profile";
-//import ProductPage from "./pages/productPage/ProductPage";
 import Signup from "./pages/signup/Signup";
 import FindFriend from "./pages/findFriend/FindFriend";
-//import Example from "./components/PopUpCards";
+import SuggestProduct from "./pages/suggestProduct/SuggestProduct"
 
 function App() {
   return (
@@ -23,6 +22,7 @@ function App() {
       <Header />
         <Switch>
           <Route path = "/details/:id"><ProductPage /></Route>
+          <Route path = "/suggest/:id"><SuggestProduct /></Route>
           <Route path="/login"><Login /></Route>
           <Route path="/signup"><Signup /></Route>
           <Route path="/profile"><Profile />

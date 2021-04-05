@@ -65,7 +65,6 @@ function ProductPage() {
     set_mb_ModalState(!mb_modalShow)
   }
 
-  console.log("Hello")
   const notify = (prompt) => toast(prompt, {hideProgressBar: true});
   const notifyOnAddingToCart = (prompt) => toast(prompt, {hideProgressBar: true});
 
@@ -84,7 +83,9 @@ function ProductPage() {
           <div className = "Buttons">
             <button id = "MoodBoardButton" onClick = {onToggleMb_button}  >ADD TO MOOD BOARD</button>
             <button id = "CartButton" >ADD TO CART</button> 
-            <button id = "SuggestButton"  onClick={toggle}  >SUGGEST TO A FRIEND</button>
+            <Link   to ={{
+              pathname: `/suggest/${params.id}`,}}>
+                <div id = "SuggestButton"   >SUGGEST TO A FRIEND</div></Link>
           </div>
           </div>
       </div>

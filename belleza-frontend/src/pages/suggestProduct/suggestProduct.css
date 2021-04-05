@@ -1,0 +1,53 @@
+.suggest_product_page{
+    display: flex;
+    box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+    width: 750px;
+    height: 500px;
+    margin-left: 25%;
+    margin-top: 40px;
+}
+.product_info{
+    
+    width: 35%;
+}
+.friend_list{
+    height: 450px;
+    display: inline;
+    width: 65%;
+}
+
+.friend_list_cards{
+    border: none;
+    background-color: white;
+    display: inline;
+    margin-top: 10px;
+    margin-left: 10px;
+    width: 450px;
+    height: 60px;
+    padding: 10px;
+    text-align: start;
+    box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
+    
+  }
+
+ .product_name{
+    font-size: xx-large;   
+    font-weight: bolder;
+    text-align: start;
+    margin: 10px; 
+ }
+ .product_description{
+    text-align: start;
+    margin: 10px;
+ }
+
+ .product_price{ font-size: large;   
+    color: darkgrey;
+    text-align: start;
+    margin: 10px;  } 
+  
+ .product_image{
+     width: 230px;
+     height: 100px;
+     margin: 10px;
+ }   

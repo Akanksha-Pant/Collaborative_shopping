@@ -15,12 +15,12 @@ function Main() {
 
   const ProductCard = (card) =>{
     return (
-      <div className = "ProductCard" key = {card.description}>
+      <div className = "ProductCard" >
         <img src = {card.image} height = "380px" width = "290px"/>
-        <div className = "name" key = {card.name}>{card.name} </div>
-        <div className = "description" key = {`des${card.name}`}>{card.description} </div>
-        <div className = "price" key = {`price${card.name}`}>Rs.{card.price}</div>
-        <div className = "buy_button" key = {`button${card.name}`}><Link id = "view" key = {`btn${card.name}`} to = {`details/${card._id}`} >VIEW</Link></div>
+        <div className = "name" >{card.name} </div>
+        <div className = "description" >{card.description} </div>
+        <div className = "price" >Rs.{card.price}</div>
+        <div className = "buy_button" ><Link id = "view"   to = {`details/${card._id}`} >VIEW</Link></div>
       </div>
       
     );
