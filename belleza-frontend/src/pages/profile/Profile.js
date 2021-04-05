@@ -7,6 +7,7 @@ function Profile() {
     async function getUserData() {
       let currentUser = await getCurrentUser();
       setUsername(currentUser.username);
+      console.log(currentUser);
     }
     return (
       <div>

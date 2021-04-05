@@ -11,7 +11,7 @@ function FriendRequest() {
     const allFriendReq = async () => {
         let currentUser = await getCurrentUser();
         console.log(currentUser)
-        if (!currentUser) setMyFriendReq([]); 
+        if (!currentUser) setMyFriendReq([]);
         setMyFriendReq(currentUser.requests);
     }
     const acceptRequest = async (fromUser) => {
@@ -21,6 +21,10 @@ function FriendRequest() {
             withCredentials: true,
             url: `http://localhost:5000/accept/${toUser.username}/${toUser._id}/${fromUser.username}/${fromUser._id}`,
           })
+          let currentUser = await getCurrentUser();
+          console.log(currentUser)
+
+          setMyFriendReq(currentUser.requests);
     }
     const deleteRequest = async (fromUser) => {
         let toUser = await getCurrentUser();
@@ -29,17 +33,21 @@ function FriendRequest() {
             withCredentials: true,
             url: `http://localhost:5000/delete/${toUser._id}/${fromUser._id}`,
           })
+          let currentUser = await getCurrentUser();
+          console.log(currentUser)
+
+          setMyFriendReq(currentUser.requests);
     }
     return (
         <Dropdown overlay={
             <Menu>
             {myFriendReq.map((req) =>
               <div className="req-list-item" key={req.username}>
-                {req.username} 
+                {req.username}
                 <Space className="">
-                  <Button onClick={() => acceptRequest(req)} shape="circle" icon={<DeleteOutlined />} />
-                  <Button onClick={() => deleteRequest(req)} shape="circle" icon={<CheckCircleTwoTone twoToneColor="#52c41a" /> } />
-                </Space>  
+                  <Button onClick={() => deleteRequest(req)} shape="circle" icon={<DeleteOutlined />} />
+                  <Button onClick={() => acceptRequest(req)} shape="circle" icon={<CheckCircleTwoTone twoToneColor="#52c41a" /> } />
+                </Space>
               </div>
             )}
             </Menu>

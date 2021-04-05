@@ -112,7 +112,7 @@ app.post("/register", function(req, res) {
 })
 
 app.post("/login", function(req, res) {
-  console.log(req.body);
+
   const user = new User({
     username: req.body.username,
     password: req.body.password
@@ -130,7 +130,17 @@ app.post("/login", function(req, res) {
 });
 
 app.get("/profile", (req, res) => {
-  res.send(req.user); // The req.user stores the entire user that has been authenticated inside of it.
+
+  User.find({_id: req.user._id}, function(err, user){
+    if (err){
+      console.log(err);
+    }
+    else{
+
+      res.send(user[0])
+    }
+  })
+  // res.send(req.user);
 });
 
 app.get("/products", (req, res) => {
@@ -153,10 +163,10 @@ app.get("/search", (req, res) => {
 });
 
 app.get("/request/:to/:from", function(req, res) {
-  console.log(req.params);
+
   const to = req.params.to;
   const from = req.params.from;
-  console.log(to, from);
+
   User.find({
     _id: from
   }, function(err, fromUser) {
@@ -164,12 +174,12 @@ app.get("/request/:to/:from", function(req, res) {
       console.log(err);
     } else {
       fromUser = fromUser[0];
-      console.log(fromUser);
+
       const newRequest = {
         _id: fromUser._id,
         username: fromUser.username
       };
-      console.log(newRequest);
+
       User.findOneAndUpdate({
         _id: to,
         "requests._id": { $ne: fromUser._id }
@@ -181,7 +191,7 @@ app.get("/request/:to/:from", function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          console.log("Request saved successfully.");
+          console.log(`Request from ${from} to ${to} saved successfully.`);
         }
       })
     }
@@ -189,7 +199,7 @@ app.get("/request/:to/:from", function(req, res) {
 })
 
 app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
-  console.log(req.params);
+
   const to = req.params.toId;
   const from = req.params.fromId;
   const toName = req.params.toName;
@@ -202,8 +212,7 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
     name: toName,
     _id: to
   }
-  console.log(toFriend);
-  console.log(fromFriend);
+
 
   User.findOneAndUpdate({
     _id: to,
@@ -216,7 +225,7 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
     if (err) {
       console.log(err);
     } else {
-      console.log("friend saved successfully.");
+      console.log(`friend ${toName}, ${fromName} saved successfully.`);
       User.findOneAndUpdate({
         _id: from,
         "friends._id": { $ne: to }
@@ -228,8 +237,8 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
         if (err) {
           console.log(err);
         } else {
-          console.log("friend saved successfully.");
-          //Deleting the pending request
+          console.log(`friend ${toName}, ${fromName} saved successfully.`);
+          // Deleting the pending request
 
               axios({
                   method: "GET",
@@ -247,23 +256,23 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
 app.get("/delete/:to/:from", function(req, res){
   const to = req.params.to;
   const from = req.params.from;
-  console.log(to, from);
+
   User.find({_id: to}, function(err, user){
 
 
       requests = user[0].requests;
-      console.log(requests);
+
       requests = requests.filter(function(request){
         return (request._id != from);
       })
-      console.log(requests);
+
 
       User.updateOne({_id: to}, {requests: requests}, function(err){
         if (err){
           console.log(err);
         }
         else{
-          console.log("Request deleted");
+          console.log("Request deleted here");
 
         }
       })
