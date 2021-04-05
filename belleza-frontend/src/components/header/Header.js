@@ -23,6 +23,7 @@ function Header() {
     setCurrentTab(e.key);
   }
   const currentUserDetails = () => {
+    console.log("Hello");
     if (!currentUser) 
       return (
       <Link to="/login">

@@ -5,6 +5,7 @@ import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 import Modal  from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
+import getCurrentUser from "./../../services/currentUser";
 
 Modal.setAppElement('body');
 toast.configure({hideProgressBar: true})
@@ -19,10 +20,15 @@ function ProductPage() {
   const [detailProduct, setDetail] = useState([])
   const [modalShow, setModalState] = useState(false);
   const [mb_modalShow, set_mb_ModalState] = useState(false);
-
+  const [friendList, setFriendList] = useState([]);
+  const [currUser, setCurrUser] = useState("none");
+  
 
   useEffect(async () => {
     const res = await axios.get("http://localhost:5000/products");
+    const userInfo = await getCurrentUser();
+    setCurrUser(userInfo);
+    setFriendList(userInfo.friends);
     setProduct(res.data)
     if(params){
      for(var i = 0; i < products.length; i++){
@@ -31,17 +37,26 @@ function ProductPage() {
     }
   }, [params, products]);
 
-
-  const popUpFriendsCards = (props) => {
+  const postSuggestionRequest = async (friend) => {
+    const res = await axios.post("http://localhost:5000/addSuggestion",{
+      userId: currUser._id,
+      friendId: friend._id,
+      friendName: friend.name,
+      product: detailProduct,
+    });
+    console.log(res);
+  }
+  const popUpFriendsCards = (friend) => {
       return(
-        <button onClick = {toggle} className = "popUpFriendsCards"> {props} </button>
+        <button onClick = {toggle} className = "popUpFriendsCards"> {friend.name} </button>
       )
   }
   
 
   const toggle = () => {
-    setModalState(!modalShow)
+    setModalState(!modalShow);
   }
+
 
   const onToggleMb_button = (isCloseButton) =>{
     if(mb_modalShow == true){
@@ -50,6 +65,7 @@ function ProductPage() {
     set_mb_ModalState(!mb_modalShow)
   }
 
+  console.log("Hello")
   const notify = (prompt) => toast(prompt, {hideProgressBar: true});
   const notifyOnAddingToCart = (prompt) => toast(prompt, {hideProgressBar: true});
 
@@ -76,27 +92,30 @@ function ProductPage() {
 
 
 
-      <Modal className = "suggestPopUp" isOpen = {modalShow} >
-        <div className = "suggestPopHeader"> Suggest your friend
+      <Modal className = "PopUp" isOpen = {modalShow} >
+        <div className = "PopHeader"> Suggest your friend
         <div className = "spacingBlock"></div>
         <button onClick = {toggle }>Close</button>
         </div>
-        <div className = "suggestPopBody">
-        <img src = {`${detailProduct.image}`}   className = "SuggestPopUpImage"/>
-        <div className = "CardList"> 
+        <div className = "PopBody">
+        <img src = {`${detailProduct.image}`}   className = "PopUpImage"/>
+        <div className = "CardList">
+        {friendList.map(popUpFriendsCards)}
          </div>
+         
         </div>
       </Modal>
 
 
-      <Modal className = "suggestPopUp" isOpen = {mb_modalShow} >
-        <div className = "suggestPopHeader"> Add to your MoodBoard!
+      <Modal className = "PopUp" isOpen = {mb_modalShow} >
+        <div className = "PopHeader"> Add to your MoodBoard!
         <div className = "spacingBlock"></div>
         <button onClick = {onToggleMb_button}>Close</button>
         </div>
-        <div className = "suggestPopBody">
-        <img src = {`${detailProduct.image}`}   className = "SuggestPopUpImage"/>
-        <div className = "CardList"> 
+        <div className = "PopBody">
+        <img src = {`${detailProduct.image}`}   className = "PopUpImage"/>
+        <div className = "CardList">
+
          </div>
         </div>
       </Modal>
