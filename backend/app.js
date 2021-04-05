@@ -136,8 +136,12 @@ app.get("/profile", (req, res) => {
       console.log(err);
     }
     else{
-
-      res.send(user[0])
+      if (user.length == 0){
+        res.send({});
+      }
+      else{
+        res.send(user[0])
+      }
     }
   })
   // res.send(req.user);
@@ -287,7 +291,7 @@ req.logout();
     }
     else{
       console.log("session destroyed");
-      res.redirect("/")
+      res.send("Successfully logged out")
     }
   })
 })
