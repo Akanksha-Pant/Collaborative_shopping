@@ -1,11 +1,24 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
+import axios from 'axios';
 import "./suggestionBox.css"
 
 function SuggestionBox(){
+    const [suggestions, setSuggestions] = useState([]); 
+    const getSuggestions = async() => {
+        const res = await axios.get("http://localhost:5000/suggestion");
+        console.log(res);
+    }
+    const deleteSuggestions = async () =>{
+        const res = await axios.get();
+    }
+    useEffect(() => {
+        getSuggestions();
+        return () => {};
+      }, []);
+
     const suggestionBoardCard = () => {
         return <div className = "suggestion_box_card">
         <div className = "suggested_by">Friend Name!</div>
-        <img  className =  "suggestion_box_image" src = "https://assets.myntassets.com/h_1440,q_100,w_1080/v1/image/style/properties/934347/Harpa-Women-Tops_1_8e2fd87b7586c8721eb0fd9b490d15a5.jpg"/>
         <div className = "suggestion_box_name">Name</div>
         <div className = "suggestion_box_description">description</div>
         <div className = "button_bar">
