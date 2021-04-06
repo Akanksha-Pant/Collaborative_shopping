@@ -17,11 +17,14 @@ function Profile() {
   }
     return (
       <div>
-        <ProfileComponent isSelfProfile={true} user={user} />
-        {/* <button onClick={getUserData}>Check login info</button> */}
-        {/* <br /> */}
-        {/* Username: {username} */}
+        {showProfile(user)}
       </div>
     );
+  }
+
+  function showProfile(user){
+    return <div>
+       <ProfileComponent isSelfProfile={true} user={user} />
+    </div>
   }
 export default Profile;
