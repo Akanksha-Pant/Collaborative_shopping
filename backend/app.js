@@ -82,12 +82,24 @@ const suggestionBoxSchema = new mongoose.Schema({
   }
 });
 
+const wishlistSchema = new mongoose.Schema({
+  userId: String,
+  product: {
+    _id: String,
+    name: String,
+    image: String,
+    price: Number,
+    description: String
+  }
+});
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
 const User = new mongoose.model("User", userSchema);
 const Product = new mongoose.model("Product", productSchema);
 const SuggestionBox = new mongoose.model("SuggestionBox", suggestionBoxSchema);
+const Wishlist = new mongoose.model("Wishlist", wishlistSchema);
 
 passport.use('user-local', new LocalStrategy(User.authenticate()));
 
@@ -184,7 +196,7 @@ app.get("/request/:to/:from", function(req, res) {
 
   const to = req.params.to;
   const from = req.params.from;
-  
+
   if (to === from){
     console.log("You can't send a request to yourself");
 
@@ -317,6 +329,32 @@ app.post("/addSuggestion", function(req, res){
     }
     else{
       console.log("Suggestion saved successfully");
+    }
+  })
+})
+
+app.post("/wishlist/add", function(req, res){
+  const wish = new Wishlist({
+    userId: req.body.userId,
+    product: req.body.product
+  })
+  wish.save((err) => {
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Product added to wishlist");
+    }
+  })
+})
+
+app.get("/wishlist/delete/:id", function(req, res){
+  Wishlist.deleteOne({_id: req.params.id}, function(err){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Product deleted from wishlist successfully");
     }
   })
 })
