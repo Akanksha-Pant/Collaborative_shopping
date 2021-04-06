@@ -18,10 +18,11 @@ function SuggestProduct() {
 
 
  const postSuggestionRequest =  (friend) => {
+   console.log(currUser);
     const res = axios.post("http://localhost:5000/suggestion/add",{
-      userId: currUser._id,
-      friendId: friend._id,
-      friendName: friend.name,
+      userId: friend._id,
+      friendId: currUser._id,
+      friendName: currUser.username,
       product: detailProduct,
     }, { withCredentials: true });
     console.log(res);

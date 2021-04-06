@@ -345,6 +345,7 @@ app.get("/suggestion/delete/:id", function(req, res){
 })
 
 app.get("/suggestion", function(req, res){
+  
   SuggestionBox.find({userId: req.user._id}, function(err, products){
     if (err){
       console.log(err);

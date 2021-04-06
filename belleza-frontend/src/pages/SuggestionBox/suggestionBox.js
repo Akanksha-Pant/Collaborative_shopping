@@ -4,13 +4,19 @@ import axios from 'axios';
 import "./suggestionBox.css"
 
 function SuggestionBox(){
-    const [suggestions, setSuggestions] = useState([]); 
+    const [suggestions, setSuggestions] = useState([]);
+
     const getSuggestions = async() => {
         const res = await axios.get("http://localhost:5000/suggestion",{withCredentials: true});
+        console.log(res.data);
         setSuggestions(res.data);
     }
     const deleteSuggestions = async (id) =>{
-        const res = await axios.get(`http://localhost:5000/suggestion/delete/${id}`,{withCredentials: true});
+        const response = await axios.get(`http://localhost:5000/suggestion/delete/${id}`,{withCredentials: true});
+          const res = await axios.get("http://localhost:5000/suggestion",{withCredentials: true});
+          console.log(res.data);
+          setSuggestions(res.data);
+
     }
     useEffect(() => {
         getSuggestions();
