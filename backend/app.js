@@ -359,6 +359,8 @@ app.get("/delete/:to/:from", function(req, res){
   })
 })
 
+//suggestionBox routes --------------------------------
+
 app.post("/suggestion/add", function(req, res){
   console.log(req.body);
   const suggestion = new SuggestionBox({
@@ -401,6 +403,8 @@ app.get("/suggestion", function(req, res){
   })
 })
 
+//wishlist routes -------------------------------------------
+
 app.post("/wishlist/add", function(req, res){
   const wish = new Wishlist({
     userId: req.body.userId,
@@ -439,7 +443,7 @@ app.get("/wishlist", function(req, res){
   })
 })
 
-//Buylist routes ----------------------
+//Buylist routes -----------------------------------------
 
 app.post("buylist/add", function(req, res){
   const buy = new Buylist({
@@ -526,23 +530,35 @@ app.get("/buylist/buy/:id", function(req, res){
 })
 
 
+app.post("buylist/add/rating", function(req, res){
+Buylist.find({userId : req.user._id, productId: req.body.productId}, function(err, item){
+  if (err){
+    console.log(err);
+  }
+  else{
+    const sum = item.rating.sum + req.body.rating;
+    const no = item.rating.no + 1;
+    const avg = sum / no;
+    const rating = {
+      sum: sum,
+      no: no,
+      avg: avg
+    };
+    Buylist.findOneAndUpdate({userId : req.user._id, productId: req.body.productId},
+      {rating: rating}, function(err){
+          if (err){
+            console.log(err);
+          }
+          else{
+            console.log("Rating Added");
+          }
+      })
+  }
+})
 
+})
 
-// app.post("buylist/add/rating", function(req, res){
-//
-//   Buylist.findOneAndUpdate({userId : req.user._id, productId: req.body.productId}, {
-//         rating
-//       }, function(err){
-//         if (err){
-//           console.log(err);
-//         }
-//         else{
-//           console.log("Review Added");
-//         }
-//     })
-// })
-
-//.................
+//boughtlist routes ..........................................
 
 app.get("/boughtlist/:id", function(req, res){
   Boughtlist.find({userId: req.params.id}, function(err, products){
