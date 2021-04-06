@@ -1,19 +1,26 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import getCurrentUser from "./../../services/currentUser";
+import ProfileComponent from "./../../components/profile/Profile";
 
 function Profile() {
-    const [username, setUsername] = useState("none");
+    const [user, setUser] = useState("none");
 
-    async function getUserData() {
-      let currentUser = await getCurrentUser();
-      setUsername(currentUser.username);
-      console.log(currentUser);
-    }
+    useEffect(() => {
+      getUserData();
+      return () => { }
+    }, [])
+    function getUserData() {
+      getCurrentUser().then((currentUser) => {
+        setUser(currentUser);
+        console.log(currentUser);
+    });
+  }
     return (
       <div>
-        <button onClick={getUserData}>Check login info</button>
-        <br />
-        Username: {username}
+        <ProfileComponent isSelfProfile={true} user={user} />
+        {/* <button onClick={getUserData}>Check login info</button> */}
+        {/* <br /> */}
+        {/* Username: {username} */}
       </div>
     );
   }

@@ -13,8 +13,10 @@ import Main from "./pages/main/Main";
 import Profile from "./pages/profile/Profile";
 import Signup from "./pages/signup/Signup";
 import FindFriend from "./pages/findFriend/FindFriend";
-import SuggestProduct from "./pages/suggestProduct/SuggestProduct"
-import SuggestionBox from "./pages/SuggestionBox/suggestionBox"
+import SuggestProduct from "./pages/suggestProduct/SuggestProduct";
+import SuggestionBox from "./pages/SuggestionBox/suggestionBox";
+import FriendComponent from "./pages/friendProfile/FriendProfile";
+
 function App() {
   return (
     <div className="App">
@@ -26,6 +28,7 @@ function App() {
           <Route path = "/suggest/:id"><SuggestProduct /></Route>
           <Route path="/login"><Login /></Route>
           <Route path="/signup"><Signup /></Route>
+          <Route path="/profile/:id"><FriendComponent /></Route>
           <Route path="/profile"><Profile />
           </Route><Route path="/findfriend"><FindFriend /></Route>
           <Route exact path="/"><Main /></Route> 

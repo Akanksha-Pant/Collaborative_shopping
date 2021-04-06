@@ -9,6 +9,20 @@ import getCurrentUser from "./../../services/currentUser";
 // import SearchFriend from "./search-friend.jpeg"
 // const { SubMenu } = Menu;
 
+function CurrentUserDetails ({currentUser}) {
+  console.log(currentUser)
+  if (!currentUser) 
+    return (
+    <Link to="/login">
+       <Button> Login</Button>
+    </Link>)
+  else
+    return (
+    <Button type="primary" shape="circle">
+      <Link to="/profile">{currentUser.username[0]}</Link>
+    </Button>)
+}
+
 function Header() {
   const [ currentTab, setCurrentTab ] = useState("home")
   const [ currentUser, setCurrentUser ] = useState()
@@ -18,23 +32,11 @@ function Header() {
       const user = await getCurrentUser(); 
       setCurrentUser(user);
     }
-  }, [])
+  });
   const handleClick = (e) => {
     setCurrentTab(e.key);
   }
-  const currentUserDetails = () => {
-    console.log("Hello");
-    if (!currentUser) 
-      return (
-      <Link to="/login">
-         <Button> Login</Button>
-      </Link>)
-    else
-      return (
-      <Button type="primary" shape="circle">
-        <Link to="/profile">{currentUser.username[0]}</Link>
-      </Button>)
-  }
+  
     return (
       <Space className="Header">
           <Menu onClick={handleClick} selectedKeys={[currentTab]} mode="horizontal">
@@ -48,7 +50,8 @@ function Header() {
             </Menu.Item>
             <FriendRequest />
             <Notifications />
-            { currentUserDetails() }            
+            <CurrentUserDetails currentUser={currentUser}/>
+            {/* { currentUserDetails() }             */}
             {/* <img style={{height: "3em"}} src={SearchFriend} /> */}
           </Menu>
       </Space>
