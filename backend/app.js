@@ -184,36 +184,42 @@ app.get("/request/:to/:from", function(req, res) {
 
   const to = req.params.to;
   const from = req.params.from;
+  
+  if (to === from){
+    console.log("You can't send a request to yourself");
 
-  User.find({
-    _id: from
-  }, function(err, fromUser) {
-    if (err) {
-      console.log(err);
-    } else {
-      fromUser = fromUser[0];
+  }
+  else{
+    User.find({
+      _id: from
+    }, function(err, fromUser) {
+      if (err) {
+        console.log(err);
+      } else {
+        fromUser = fromUser[0];
 
-      const newRequest = {
-        _id: fromUser._id,
-        username: fromUser.username
-      };
+        const newRequest = {
+          _id: fromUser._id,
+          username: fromUser.username
+        };
 
-      User.findOneAndUpdate({
-        _id: to,
-        "requests._id": { $ne: fromUser._id }
-      }, {
-        $push: {
-          requests: newRequest
-        }
-      }, function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log(`Request from ${from} to ${to} saved successfully.`);
-        }
-      })
-    }
-  })
+        User.findOneAndUpdate({
+          _id: to,
+          "requests._id": { $ne: fromUser._id }
+        }, {
+          $push: {
+            requests: newRequest
+          }
+        }, function(err) {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(`Request from ${from} to ${to} saved successfully.`);
+          }
+        })
+      }
+    })
+  }
 })
 
 app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
@@ -300,9 +306,9 @@ app.get("/delete/:to/:from", function(req, res){
 app.post("/addSuggestion", function(req, res){
   console.log(req.body);
   const suggestion = new SuggestionBox({
-    userId: req.user._id,
-    friendId: req.body.id,
-    friendName: req.body.name,
+    userId: req.body.userId,
+    friendId: req.body.friendId,
+    friendName: req.body.friendName,
     product: req.body.product
   })
   suggestion.save((err) => {
