@@ -359,6 +359,18 @@ app.get("/wishlist/delete/:id", function(req, res){
   })
 })
 
+app.get("/wishlist", function(req, res){
+  Wishlist.find({userId: req.user._id}, function(err, products){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("wishlist products found successfully");
+      res.send(products);
+    }
+  })
+})
+
 app.get("/logout", function(req, res){
 req.logout();
   req.session.destroy(function(err){
