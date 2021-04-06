@@ -111,6 +111,17 @@ const buylistSchema = new mongoose.Schema({
   }
 });
 
+const boughtlistSchema = new mongoose.Schema({
+  userId: String,
+  product: {
+    _id: String,
+    name: String,
+    image: String,
+    price: Number,
+    description: String
+  }
+});
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
@@ -119,6 +130,7 @@ const Product = new mongoose.model("Product", productSchema);
 const SuggestionBox = new mongoose.model("SuggestionBox", suggestionBoxSchema);
 const Wishlist = new mongoose.model("Wishlist", wishlistSchema);
 const Buylist = new mongoose.model("Buylist", buylistSchema);
+const Boughtlist = new mongoose.model("Boughtlist", boughtlistSchema);
 
 
 passport.use('user-local', new LocalStrategy(User.authenticate()));
@@ -480,6 +492,42 @@ app.get("/buylist/:id", function(req, res){
   })
 })
 
+app.get("/buylist/delete/:id", function(req, res){
+  Buylist.deleteOne({_id: req.params.id}, function(err){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Item deleted from buyList");
+    }
+  })
+})
+
+app.get("/buylist/buy/:id", function(req, res){
+  BuyList.find({_id: req.params.id}, function(err, item){
+    const bought = new Boughtlist({
+      userId: item.userId,
+      product: item.product
+    })
+    bought.save((err) => {
+      if (err){
+        console.log(err);
+      }
+      else{
+        console.log("Product added to buylist");
+            axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/buylist/delete/" + item._id
+          })
+      }
+    })
+  })
+})
+
+
+
+
 // app.post("buylist/add/rating", function(req, res){
 //
 //   Buylist.findOneAndUpdate({userId : req.user._id, productId: req.body.productId}, {
@@ -493,6 +541,20 @@ app.get("/buylist/:id", function(req, res){
 //         }
 //     })
 // })
+
+//.................
+
+app.get("/boughtlist/:id", function(req, res){
+  Boughtlist.find({userId: req.params.id}, function(err, products){
+    if (err){
+      console.log(err);
+    }
+    else{
+      res.send(products);
+    }
+  })
+})
+
 
 
 app.get("/logout", function(req, res){
