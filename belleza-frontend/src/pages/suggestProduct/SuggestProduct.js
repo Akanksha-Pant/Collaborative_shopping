@@ -7,8 +7,8 @@ import React , {useContext, useEffect, useState } from 'react';
 
 
 function SuggestProduct() {
- 
- const params = useParams();   
+
+ const params = useParams();
 
  const [friendList, setFriendList] = useState([]);
  const [currUser, setCurrUser] = useState("none");
@@ -23,7 +23,7 @@ function SuggestProduct() {
       friendId: friend._id,
       friendName: friend.name,
       product: detailProduct,
-    });
+    }, { withCredentials: true });
     console.log(res);
   }
 
@@ -50,7 +50,7 @@ function SuggestProduct() {
      }
     }
   }, [params, products]);
- 
+
 
 return<div className = "suggest_product_page">
     <div className = "product_info"  >
