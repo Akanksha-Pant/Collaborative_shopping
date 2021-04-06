@@ -315,7 +315,7 @@ app.get("/delete/:to/:from", function(req, res){
   })
 })
 
-app.post("/addSuggestion", function(req, res){
+app.post("/suggestion/add", function(req, res){
   console.log(req.body);
   const suggestion = new SuggestionBox({
     userId: req.body.userId,
@@ -329,6 +329,29 @@ app.post("/addSuggestion", function(req, res){
     }
     else{
       console.log("Suggestion saved successfully");
+    }
+  })
+})
+
+app.get("/suggestion/delete/:id", function(req, res){
+  SuggestionBox.deleteOne({_id: req.params.id}, function(err){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Product deleted from suggestions successfully");
+    }
+  })
+})
+
+app.get("/suggestion", function(req, res){
+  SuggestionBox.find({userId: req.user._id}, function(err, products){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Suggestion products found successfully");
+      res.send(products);
     }
   })
 })

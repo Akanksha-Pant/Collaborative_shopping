@@ -18,7 +18,7 @@ function SuggestProduct() {
 
 
  const postSuggestionRequest =  (friend) => {
-    const res = axios.post("http://localhost:5000/addSuggestion",{
+    const res = axios.post("http://localhost:5000/suggestion/add",{
       userId: currUser._id,
       friendId: friend._id,
       friendName: friend.name,
