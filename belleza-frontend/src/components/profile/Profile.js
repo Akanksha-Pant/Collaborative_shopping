@@ -60,7 +60,7 @@ function FriendComponent(user) {
 }
 function Profile({isSelfProfile, user}) {
     console.log(user)
-    if (user === "none") return "Loading..."
+    if (user === "none") return "This user does not exist"
     return (
         <div>
             <Avatar className="userAvatar">{user.username[0]}</Avatar>

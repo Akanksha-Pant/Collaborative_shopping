@@ -7,6 +7,7 @@ import axios from "axios";
 function Profile() {
     const { id } = useParams();
     const [user, setUser] = useState("none");
+    const [isLoading, setisLoading] = useState(true);
 
     useEffect(() => {
       getUserData();
@@ -18,9 +19,13 @@ function Profile() {
         url: `http://localhost:5000/user/${id}`,
       }).then((res) => {
         setUser(res.data[0]);
+        setisLoading(false);
       })
-      console.log(user);
     }
+    
+    if (isLoading === true) {
+        return <h1>Loading</h1>
+      }
     return (
       <div>
         <ProfileComponent isSelfProfile={false} user={user} />
