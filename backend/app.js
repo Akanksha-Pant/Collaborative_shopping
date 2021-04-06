@@ -173,6 +173,18 @@ app.get("/profile", (req, res) => {
   // res.send(req.user);
 });
 
+app.get("/user/:id", function(req, res){
+  User.find({_id: req.params.id}, function(err, user){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("User found successfully");
+      res.send(user);
+    }
+  })
+})
+
 app.get("/products", (req, res) => {
   Product.find({}, function(err, products) {
     if (err) {
@@ -345,7 +357,7 @@ app.get("/suggestion/delete/:id", function(req, res){
 })
 
 app.get("/suggestion", function(req, res){
-  
+
   SuggestionBox.find({userId: req.user._id}, function(err, products){
     if (err){
       console.log(err);
