@@ -361,23 +361,28 @@ app.get("/delete/:to/:from", function(req, res){
 
 //suggestionBox routes --------------------------------
 
+
 app.post("/suggestion/add", function(req, res){
   console.log(req.body);
-  const suggestion = new SuggestionBox({
-    userId: req.body.userId,
-    friendId: req.body.friendId,
-    friendName: req.body.friendName,
-    product: req.body.product
-  })
-  suggestion.save((err) => {
-    if (err){
-      console.log(err);
-    }
-    else{
-      console.log("Suggestion saved successfully");
-    }
-  })
+  SuggestionBox.findOneAndUpdate(
+    {
+      userId: req.body.userId,
+      friendId: req.body.friendId,
+      friendName: req.body.friendName,
+      product: req.body.product
+    },
+  {
+    userId: req.body.userId
+  }, {upsert: true}, function(err){
+      if (err){
+        console.log(err);
+      }
+      else{
+        console.log("Suggestion saved");
+      }
+    })
 })
+
 
 app.get("/suggestion/delete/:id", function(req, res){
   SuggestionBox.deleteOne({_id: req.params.id}, function(err){
