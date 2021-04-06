@@ -17,8 +17,11 @@ function MoodboardCard({name, imageURL}) {
     )
 }
 
-function SuggestionBoard() {
-    return <Card>Suggestion From Friends</Card>
+function SuggestionBoard(isSelf) {
+    if (isSelf === true) {
+        return <Card>Suggestion From Friends</Card>
+    }
+    return "";
 }
 
 function FriendComponent(user) {
@@ -57,7 +60,7 @@ function FriendComponent(user) {
 }
 function Profile({isSelfProfile, user}) {
     console.log(user)
-    if (!user) return "No such user exists"
+    if (user === "none") return "Loading..."
     return (
         <div>
             <Avatar className="userAvatar">{user.username[0]}</Avatar>
@@ -69,9 +72,7 @@ function Profile({isSelfProfile, user}) {
                 <MoodboardCard name="Buying" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
                 <MoodboardCard name="Wishlist" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
             </div>
-            {() => { 
-                if (isSelfProfile === true) return <SuggestionBoard /> }
-            }
+            <SuggestionBoard isSelf={isSelfProfile} />
         </div>
     )
 }
