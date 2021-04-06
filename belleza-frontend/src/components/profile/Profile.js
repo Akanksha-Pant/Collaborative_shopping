@@ -27,6 +27,10 @@ function SuggestionBoard(isSelf) {
 function FriendComponent(user) {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
+    const redirectToFriend = (id) => {
+        window.location.href = "/profile/" + id;
+    }
+
     const showModal = () => {
       setIsModalVisible(true);
     };
@@ -51,7 +55,7 @@ function FriendComponent(user) {
                     dataSource={user.user.friends}
                     renderItem={friend => (
                     <List.Item>
-                        {friend.name}<Button>View profile</Button>
+                        {friend.name}<Button onClick={() => redirectToFriend(friend._id)}>View profile</Button>
                     </List.Item>)}
                 />
             </Modal>
