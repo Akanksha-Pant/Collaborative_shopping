@@ -3,9 +3,9 @@ import axios from 'axios';
 import "./suggestionBox.css"
 
 function SuggestionBox(){
-    const [suggestions, setSuggestions] = useState([]); 
+    const [suggestions, setSuggestions] = useState([]);
     const getSuggestions = async() => {
-        const res = await axios.get("http://localhost:5000/suggestion");
+        const res = await axios.get("http://localhost:5000/suggestion", { withCredentials: true });
         console.log(res);
     }
     const deleteSuggestions = async () =>{
