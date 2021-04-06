@@ -93,6 +93,24 @@ const wishlistSchema = new mongoose.Schema({
   }
 });
 
+const buylistSchema = new mongoose.Schema({
+  userId: String,
+  productId: String,
+  product: {
+    _id: String,
+    name: String,
+    image: String,
+    price: Number,
+    description: String
+  },
+  review: Array,
+  rating: {
+    avg: Number,
+    sum: Number,
+    no: Number
+  }
+});
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
@@ -100,6 +118,8 @@ const User = new mongoose.model("User", userSchema);
 const Product = new mongoose.model("Product", productSchema);
 const SuggestionBox = new mongoose.model("SuggestionBox", suggestionBoxSchema);
 const Wishlist = new mongoose.model("Wishlist", wishlistSchema);
+const Buylist = new mongoose.model("Buylist", buylistSchema);
+
 
 passport.use('user-local', new LocalStrategy(User.authenticate()));
 
@@ -406,6 +426,74 @@ app.get("/wishlist", function(req, res){
     }
   })
 })
+
+//Buylist routes ----------------------
+
+app.post("buylist/add", function(req, res){
+  const buy = new Buylist({
+    userId: req.body.userId,
+    productId: req.body.productId,
+    product: req.body.product,
+    rating: {
+      avg: 0,
+      no: 0,
+      sum: 0
+    }
+  })
+  buy.save((err) => {
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Product added to buylist");
+    }
+  })
+})
+
+app.post("buylist/add/review", function(req, res){
+  const newReview = {
+    friendId: req.body.friendId,
+    friendName: req.body.friendName,
+    text: req.body.text
+  };
+  Buylist.findOneAndUpdate({userId : req.user._id, productId: req.body.productId}, {
+        $push: {review: newReview}
+      }, function(err){
+        if (err){
+          console.log(err);
+        }
+        else{
+          console.log("Review Added");
+        }
+    })
+})
+
+app.get("/buylist/:id", function(req, res){
+  Buylist.find({userId: req.params.id}, function(err, products){
+    if (err){
+      console.log(err);
+    }
+    else{
+      console.log("Products found successfully");
+      res.send(products);
+    }
+  })
+})
+
+// app.post("buylist/add/rating", function(req, res){
+//
+//   Buylist.findOneAndUpdate({userId : req.user._id, productId: req.body.productId}, {
+//         rating
+//       }, function(err){
+//         if (err){
+//           console.log(err);
+//         }
+//         else{
+//           console.log("Review Added");
+//         }
+//     })
+// })
+
 
 app.get("/logout", function(req, res){
 req.logout();
