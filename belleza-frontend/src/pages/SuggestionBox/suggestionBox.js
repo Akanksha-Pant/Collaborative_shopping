@@ -12,8 +12,8 @@ function SuggestionBox(){
         setSuggestions(res.data);
     }
     const deleteSuggestions = async (id) =>{
-        const response = await axios.get(`http://localhost:5000/suggestion/delete/${id}`,{withCredentials: true});
-          const res = await axios.get("http://localhost:5000/suggestion",{withCredentials: true});
+          axios.get(`http://localhost:5000/suggestion/delete/${id}`,{withCredentials: true});
+          let res = await axios.get("http://localhost:5000/suggestion",{withCredentials: true});
           console.log(res.data);
           setSuggestions(res.data);
 
