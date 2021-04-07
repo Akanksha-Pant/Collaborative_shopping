@@ -576,6 +576,34 @@ app.get("/buylist/delete/:id", function(req, res) {
   })
 })
 
+app.get("/buylist/buy/:id", function(req, res){
+
+  Buylist.find({
+    _id: req.params.id
+  }, function(err, item) {
+    const bought = new Boughtlist({
+      userId: item.userId,
+      product: item.product
+    })
+    bought.save((err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Product added to buylist");
+
+        axios({
+          method: "GET",
+          withCredentials: true,
+          url: "http://localhost:5000/buylist/delete/" + item._id
+        })
+        console.log(product);
+
+      }
+    })
+  })
+
+})
+
 
 app.post("buylist/add/rating", function(req, res) {
   Buylist.find({
