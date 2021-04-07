@@ -10,7 +10,7 @@ import getCurrentUser from "./../../services/currentUser";
 // const { SubMenu } = Menu;
 
 function CurrentUserDetails ({currentUser}) {
-  console.log(currentUser)
+  // console.log(currentUser)
   if (!currentUser) 
     return (
     <Link to="/login">
