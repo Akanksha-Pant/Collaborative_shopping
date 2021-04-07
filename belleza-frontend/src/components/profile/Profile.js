@@ -74,9 +74,9 @@ function Profile({isSelfProfile, user}) {
             <FriendComponent user={user} />
             <div className="moodboard-container">
                 <Link to ={{
-              pathname: `/wishList/${user._id}`,}}><MoodboardCard name="Brought" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /></Link>
+              pathname: `/wishList/${user._id}`,}}><MoodboardCard name="Wishlist" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /></Link>
                 <MoodboardCard name="Buying" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
-                <MoodboardCard name="Wishlist" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+                <MoodboardCard name="Bought" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
             </div>
             <SuggestionBoard isSelf={isSelfProfile} />
         </div>
