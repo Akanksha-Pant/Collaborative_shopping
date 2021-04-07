@@ -1,5 +1,6 @@
 import './login.css';
 import { Form, Input, Button } from "antd";
+import { Link } from "react-router-dom";
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from "@ant-design/icons"
 import axios from "axios";
 
@@ -51,7 +52,10 @@ function Login() {
            </Form.Item>
           </Form>
           <Button style={{ color: "mauve"}}  type="link" htmlType="button">
-              Create new account
+          <Link to="/signup">
+            Create new account
+          </Link>
+
           </Button>
       </div>
       </div>
