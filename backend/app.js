@@ -459,9 +459,9 @@ app.get("/wishlist/delete/:id", function(req, res) {
   })
 })
 
-app.get("/wishlist", function(req, res) {
+app.get("/wishlist/:id", function(req, res) {
   Wishlist.find({
-    userId: req.user._id
+    userId: req.params.id
   }, function(err, products) {
     if (err) {
       console.log(err);
@@ -469,6 +469,41 @@ app.get("/wishlist", function(req, res) {
       console.log("wishlist products found successfully");
       res.send(products);
     }
+  })
+})
+
+app.get("/wishlist/buy/:id", function(req, res) {
+  Wishlist.find({
+    _id: req.params.id
+  }, function(err, item) {
+    const buy = new Buylist({
+      userId: item.userId,
+      product: item.product,
+      productId: item.product._id,
+      rating: {
+        avg: 0,
+        no: 0,
+        sum: 0
+      }
+    })
+    buy.save((err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Product added to buylist");
+
+        axios({
+          method: "GET",
+          withCredentials: true,
+          url: "http://localhost:5000/wishlist/delete/" + item._id
+        })
+        console.log(product);
+        axios.post("http://localhost:5000/notification/add",{
+          productName: product.name
+        }, { withCredentials: true });
+
+      }
+    })
   })
 })
 
@@ -494,14 +529,14 @@ app.post("/buylist/add", function(req, res) {
   })
 })
 
-app.post("buylist/add/review", function(req, res) {
+app.post("/buylist/add/review", function(req, res) {
   const newReview = {
     friendId: req.body.friendId,
     friendName: req.body.friendName,
     text: req.body.text
   };
   Buylist.findOneAndUpdate({
-    userId: req.user._id,
+    userId: req.body.userId,
     productId: req.body.productId
   }, {
     $push: {
@@ -512,6 +547,47 @@ app.post("buylist/add/review", function(req, res) {
       console.log(err);
     } else {
       console.log("Review Added");
+
+      axios.post("http://localhost:5000/buylist/add/rating",{
+        userId: req.body.userId,
+        productId: req.body.productId,
+        rating: req.body.rating
+
+      }, { withCredentials: true });
+    }
+  })
+})
+
+
+app.post("buylist/add/rating", function(req, res) {
+  Buylist.find({
+    userId: req.body.userId,
+    productId: req.body.productId
+  }, function(err, item) {
+    if (err) {
+      console.log(err);
+    } else {
+      const sum = item.rating.sum + req.body.rating;
+      const no = item.rating.no + 1;
+      const avg = sum / no;
+      const rating = {
+        sum: sum,
+        no: no,
+        avg: avg
+      };
+      Buylist.findOneAndUpdate({
+        userId: req.user._id,
+        productId: req.body.productId
+      }, {
+        rating: rating
+      }, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Rating Added");
+
+        }
+      })
     }
   })
 })
@@ -541,7 +617,8 @@ app.get("/buylist/delete/:id", function(req, res) {
   })
 })
 
-app.get("/buylist/buy/:id", function(req, res) {
+app.get("/buylist/buy/:id", function(req, res){
+
   Buylist.find({
     _id: req.params.id
   }, function(err, item) {
@@ -561,48 +638,14 @@ app.get("/buylist/buy/:id", function(req, res) {
           url: "http://localhost:5000/buylist/delete/" + item._id
         })
         console.log(product);
-        axios.post("http://localhost:5000/notification/add",{
-          productName: product.name
-        }, { withCredentials: true });
 
       }
     })
   })
-})
-
-
-app.post("buylist/add/rating", function(req, res) {
-  Buylist.find({
-    userId: req.user._id,
-    productId: req.body.productId
-  }, function(err, item) {
-    if (err) {
-      console.log(err);
-    } else {
-      const sum = item.rating.sum + req.body.rating;
-      const no = item.rating.no + 1;
-      const avg = sum / no;
-      const rating = {
-        sum: sum,
-        no: no,
-        avg: avg
-      };
-      Buylist.findOneAndUpdate({
-        userId: req.user._id,
-        productId: req.body.productId
-      }, {
-        rating: rating
-      }, function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Rating Added");
-        }
-      })
-    }
-  })
 
 })
+
+
 
 //boughtlist routes ..........................................
 

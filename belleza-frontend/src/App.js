@@ -16,7 +16,9 @@ import FindFriend from "./pages/findFriend/FindFriend";
 import SuggestProduct from "./pages/suggestProduct/SuggestProduct";
 import SuggestionBox from "./pages/SuggestionBox/suggestionBox";
 import FriendComponent from "./pages/friendProfile/FriendProfile";
-
+import WishList from "./pages/moodboardWishlist/MoodBoardWishlist";
+import BuyList from "./pages/moodBoardBuying/MoodBoardBuying";
+import BoughtList from "./pages/moodboardBought/MoodboardBought";
 function App() {
   return (
     <div className="App">
@@ -24,6 +26,9 @@ function App() {
       <Header />
         <Switch>
           <Route path = "/details/:id"><ProductPage /></Route>
+          <Route path = "/wishList/:id"><WishList /></Route>
+          <Route path = "/buyList/:id"><BuyList /></Route>
+          <Route path = "/boughtList/:id"><BoughtList /></Route>
           <Route path = "/suggestionBox"><SuggestionBox /></Route>
           <Route path = "/suggest/:id"><SuggestProduct /></Route>
           <Route path="/login"><Login /></Route>

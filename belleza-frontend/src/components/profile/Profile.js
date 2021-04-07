@@ -78,9 +78,9 @@ function Profile({isSelfProfile = false, user}) {
     return (
         <div>
             <div className="background-purple">
-            <Avatar className="userAvatar">{user.username[0]}</Avatar>
-            <h2 className="text-style">{user.username}</h2>
-            <FriendComponent user={user} />
+                <Avatar className="userAvatar">{user.username[0]}</Avatar>
+                <h2 className="text-style">{user.username}</h2>
+                <FriendComponent user={user} />
             </div>
             
             <Row className="moodboard-container">
