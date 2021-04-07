@@ -472,6 +472,41 @@ app.get("/wishlist/:id", function(req, res) {
   })
 })
 
+app.get("/wishlist/buy/:id", function(req, res) {
+  Wishlist.find({
+    _id: req.params.id
+  }, function(err, item) {
+    const buy = new Buylist({
+      userId: item.userId,
+      product: item.product,
+      productId: item.product._id,
+      rating: {
+        avg: 0,
+        no: 0,
+        sum: 0
+      }
+    })
+    buy.save((err) => {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Product added to buylist");
+
+        axios({
+          method: "GET",
+          withCredentials: true,
+          url: "http://localhost:5000/wishlist/delete/" + item._id
+        })
+        console.log(product);
+        axios.post("http://localhost:5000/notification/add",{
+          productName: product.name
+        }, { withCredentials: true });
+
+      }
+    })
+  })
+})
+
 //Buylist routes -----------------------------------------
 
 app.post("/buylist/add", function(req, res) {
@@ -541,35 +576,6 @@ app.get("/buylist/delete/:id", function(req, res) {
   })
 })
 
-app.get("/buylist/buy/:id", function(req, res) {
-  Buylist.find({
-    _id: req.params.id
-  }, function(err, item) {
-    const bought = new Boughtlist({
-      userId: item.userId,
-      product: item.product
-    })
-    bought.save((err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Product added to buylist");
-
-        axios({
-          method: "GET",
-          withCredentials: true,
-          url: "http://localhost:5000/buylist/delete/" + item._id
-        })
-        console.log(product);
-        axios.post("http://localhost:5000/notification/add",{
-          productName: product.name
-        }, { withCredentials: true });
-
-      }
-    })
-  })
-})
-
 
 app.post("buylist/add/rating", function(req, res) {
   Buylist.find({
@@ -601,7 +607,6 @@ app.post("buylist/add/rating", function(req, res) {
       })
     }
   })
-
 })
 
 //boughtlist routes ..........................................
