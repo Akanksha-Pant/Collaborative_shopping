@@ -28,18 +28,18 @@ function BuyList(){
         console.log(res.data);
         setBuyList(res.data)
     }
-    
+
 
     const deleteData =async (id) => {
         const res = await axios.get(`http://localhost:5000/buylist/delete/${id}`, {withCredentials : true});
         console.log(res);
     }
-    
-    
+
+
     const isopen = () => {
         setIsModalVisible(true)
     }
-  
+
     const isClose = () => {
         setIsModalVisible(false)
     }
@@ -65,11 +65,11 @@ function BuyList(){
             </Card>
         </Link>
         <div><Button onClick = {() => deleteData(data._id)}> DELETE</Button><Button>BUY</Button></div>
-        <div><Button onClick = {viewReviewModal}>Review</Button></div>
-         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal}/>         
+        <div><Button onClick = {() =>viewReviewModal()}>Review</Button></div>
+         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review}/>         
         </div>
     }
-    
+
 
 
     const CardIfViewer = (data) => {
@@ -87,9 +87,9 @@ function BuyList(){
             </Card>
         </Link>
         <div><Button onClick = {() => isopen()} > Review</Button></div>
-        <PostReviewModal isVisible = {isModalVisible} onHide = {isClose} userId ={params.id} productId = {data.product._id} />
+        <PostReviewModal isVisible = {isModalVisible} onHide = {isClose} productId = {data.product._id} userId = {params.id}  />
         </div>
-    }    
+    }
 
     useEffect(async () => { 
         getBuyListdata(params.id);

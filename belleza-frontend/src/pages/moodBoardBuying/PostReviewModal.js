@@ -7,6 +7,7 @@ import getCurrentUser from '../../services/currentUser';
 function PostReviewModal(props){
     const onSubmit = async(values) =>{
         const user = await getCurrentUser();
+        console.log(props);
         const res = await axios.post("http://localhost:5000/buylist/add/review", {
             friendId: user._id,
             friendName: user.username,

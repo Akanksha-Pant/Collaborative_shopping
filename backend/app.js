@@ -529,37 +529,8 @@ app.post("/buylist/add", function(req, res) {
   })
 })
 
-app.post("/buylist/add/review", function(req, res) {
-  const newReview = {
-    friendId: req.body.friendId,
-    friendName: req.body.friendName,
-    text: req.body.text
-  };
-  Buylist.findOneAndUpdate({
-    userId: req.body.userId,
-    productId: req.body.productId
-  }, {
-    $push: {
-      review: newReview
-    }
-  }, function(err) {
-    if (err) {
-      console.log(err);
-    } else {
-      console.log("Review Added");
-
-      axios.post("http://localhost:5000/buylist/add/rating",{
-        userId: req.body.userId,
-        productId: req.body.productId,
-        rating: req.body.rating
-
-      }, { withCredentials: true });
-    }
-  })
-})
-
-
 app.post("buylist/add/rating", function(req, res) {
+  console.log("herereeeeeeee");
   Buylist.find({
     userId: req.body.userId,
     productId: req.body.productId
@@ -567,9 +538,11 @@ app.post("buylist/add/rating", function(req, res) {
     if (err) {
       console.log(err);
     } else {
+      console.log(item);
+      item = item[0];
       const sum = item.rating.sum + req.body.rating;
-      const no = item.rating.no + 1;
-      const avg = sum / no;
+      var no = item.rating.no + 1;
+      var avg = sum / no;
       const rating = {
         sum: sum,
         no: no,
@@ -591,6 +564,69 @@ app.post("buylist/add/rating", function(req, res) {
     }
   })
 })
+
+
+app.post("/buylist/add/review", function(req, res) {
+  console.log(req.body);
+  const newReview = {
+    friendId: req.body.friendId,
+    friendName: req.body.friendName,
+    text: req.body.text
+  };
+  Buylist.findOneAndUpdate({
+    userId: req.body.userId,
+    productId: req.body.productId
+  }, {
+    $push: {
+      review: newReview
+    }
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Review Added");
+      console.log(req.body.userId, req.body.productId, req.body.rating);
+
+      Buylist.find({
+        userId: req.body.userId,
+        productId: req.body.productId
+      }, function(err, item) {
+        if (err) {
+          console.log(err);
+        } else {
+          item = item[0];
+          console.log(item.rating);
+
+          const sum = item.rating.sum + req.body.rating;
+          var no = item.rating.no + 1;
+          var avg = sum / no;
+
+          const rating = {
+            sum: sum,
+            no: no,
+            avg: avg
+          };
+          console.log(rating);
+          Buylist.findOneAndUpdate({
+            userId: req.body.userId,
+            productId: req.body.productId
+          }, {
+            rating: rating
+          }, function(err) {
+            if (err) {
+              console.log(err);
+            } else {
+              console.log("Rating Added");
+
+            }
+          })
+        }
+      })
+    }
+  })
+})
+
+
 
 app.get("/buylist/:id", function(req, res) {
   Buylist.find({
