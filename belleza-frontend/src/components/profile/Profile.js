@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { List, Input, Card, Avatar, Button, Modal } from 'antd';
 import "./profile.css"
+import { Link } from "react-router-dom";
 const { Search } = Input;
 
 function MoodboardCard({name, imageURL}) {
@@ -72,7 +73,8 @@ function Profile({isSelfProfile, user}) {
             
             <FriendComponent user={user} />
             <div className="moodboard-container">
-                <MoodboardCard name="Brought" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+                <Link to ={{
+              pathname: `/wishList/${user._id}`,}}><MoodboardCard name="Brought" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /></Link>
                 <MoodboardCard name="Buying" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
                 <MoodboardCard name="Wishlist" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
             </div>

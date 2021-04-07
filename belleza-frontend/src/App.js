@@ -16,6 +16,7 @@ import FindFriend from "./pages/findFriend/FindFriend";
 import SuggestProduct from "./pages/suggestProduct/SuggestProduct";
 import SuggestionBox from "./pages/SuggestionBox/suggestionBox";
 import FriendComponent from "./pages/friendProfile/FriendProfile";
+import WishList from "./pages/moodboardWishlist/MoodBoardWishlist";
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
       <Header />
         <Switch>
           <Route path = "/details/:id"><ProductPage /></Route>
+          <Route path = "/wishList/:id"><WishList /></Route>
           <Route path = "/suggestionBox"><SuggestionBox /></Route>
           <Route path = "/suggest/:id"><SuggestProduct /></Route>
           <Route path="/login"><Login /></Route>
