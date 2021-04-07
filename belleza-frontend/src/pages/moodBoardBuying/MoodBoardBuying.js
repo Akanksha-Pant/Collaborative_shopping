@@ -14,7 +14,7 @@ function BuyList(){
     const[buyList, setBuyList] = useState([]);
     const [isSelfProfile, setIsSelfProfile] = useState(false);
     const [isModalVisible, setIsModalVisible] = useState(false);
-    
+
 
     const checkIsSelfProfile = async() => {
         const user = await getCurrentUser();
@@ -27,23 +27,23 @@ function BuyList(){
         console.log(res.data);
         setBuyList(res.data)
     }
-    
+
 
     const deleteData =async (id) => {
         const res = await axios.get(`http://localhost:5000/buylist/delete/${id}`, {withCredentials : true});
         console.log(res);
     }
-    
-    
+
+
     const isopen = () => {
         setIsModalVisible(true)
     }
-  
+
     const isClose = () => {
         setIsModalVisible(false)
     }
 
-    useEffect(async () => { 
+    useEffect(async () => {
         getBuyListdata(params.id);
         checkIsSelfProfile();
        }, [params]);
@@ -65,10 +65,10 @@ function BuyList(){
         </Link>
         <div><Button onClick = {() => deleteData(data._id)}> DELETE</Button><Button>BUY</Button></div>
         <div><Button>Review</Button></div>
-    
+
         </div>
     }
-    
+
 
 
     const CardIfViewer = (data) => {
@@ -86,9 +86,9 @@ function BuyList(){
             </Card>
         </Link>
         <div><Button onClick = {() => isopen()} > Review</Button></div>
-        <PostReviewModal isVisible = {isModalVisible} onHide = {isClose}  />
+        <PostReviewModal isVisible = {isModalVisible} onHide = {isClose} productId = {data.product._id} userId = {params.id}  />
         </div>
-    }    
+    }
 
 
     if(isSelfProfile){
