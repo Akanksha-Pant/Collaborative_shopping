@@ -459,9 +459,9 @@ app.get("/wishlist/delete/:id", function(req, res) {
   })
 })
 
-app.get("/wishlist", function(req, res) {
+app.get("/wishlist/:id", function(req, res) {
   Wishlist.find({
-    userId: req.user._id
+    userId: req.params.id
   }, function(err, products) {
     if (err) {
       console.log(err);
