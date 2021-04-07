@@ -26,6 +26,7 @@ function FindFriend() {
           .then((res) => setResultUsers(res.data));
     }
     return (
+      <div className="main">
       <div className="FindFriend">
 
       <div className="anim">
@@ -44,6 +45,7 @@ function FindFriend() {
             </List.Item>
             )}
          />
+      </div>
       </div>
     );
   }
