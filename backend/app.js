@@ -473,9 +473,12 @@ app.get("/wishlist/:id", function(req, res) {
 })
 
 app.get("/wishlist/buy/:id", function(req, res) {
+  console.log(req.params);
   Wishlist.find({
     _id: req.params.id
   }, function(err, item) {
+    item = item[0];
+    console.log(item);
     const buy = new Buylist({
       userId: item.userId,
       product: item.product,
@@ -497,9 +500,9 @@ app.get("/wishlist/buy/:id", function(req, res) {
           withCredentials: true,
           url: "http://localhost:5000/wishlist/delete/" + item._id
         })
-        console.log(product);
-        axios.post("http://localhost:5000/notification/add",{
-          productName: product.name
+        console.log(item);
+        axios.post(`http://localhost:5000/notification/add/${item.userId}`,{
+          productName: item.product.name
         }, { withCredentials: true });
 
       }
@@ -698,22 +701,23 @@ app.get("/boughtlist/:id", function(req, res) {
 })
 
 //Notification routes -----------------------------------------
-app.post("/notification/add", function(req, res) {
+app.post("/notification/add/:id", function(req, res) {
 
   User.find({
-    _id: req.user._id
+    _id: req.params.id
   }, function(err, user) {
     if (err) {
       console.log(err);
     } else {
+      console.log(user);
       friends = user[0].friends
       friends.forEach((friend) => {
 
         const notif = new Notificationlist({
           userId: friend._id,
           productName: req.body.productName,
-          friendName: req.user.username,
-          friendId: req.user._id
+          friendName: user[0].username,
+          friendId: req.params.id
 
         })
         notif.save((err) => {

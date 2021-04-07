@@ -31,8 +31,20 @@ function WishList(){
     const[wishListProduct, setwishListProduct] = useState([])
 
     function CardIfAccountHolder(data){
+
         const deleteItem =async () => {
             axios.get(`http://localhost:5000/wishlist/delete/${data._id}`,
+            {withCredentials: true})
+
+            let res = await axios.get(`http://localhost:5000/wishlist/${params.id}`,{withCredentials: true})
+            console.log(res);
+            setwishListProduct(res.data)
+            console.log(wishListProduct);
+        }
+
+        const buyItem =async () => {
+          console.log(data);
+            axios.get(`http://localhost:5000/wishlist/buy/${data._id}`,
             {withCredentials: true})
 
             let res = await axios.get(`http://localhost:5000/wishlist/${params.id}`,{withCredentials: true})
@@ -54,7 +66,7 @@ function WishList(){
             <div>{data.product.description}</div>
             </Card>
         </Link>
-        <div><Button onClick = {() =>deleteItem()}> DELETE</Button><Button>BUYBOARD</Button></div>
+        <div><Button onClick = {() =>deleteItem()}> DELETE</Button><Button  onClick = {() =>buyItem()}>BUYBOARD</Button></div>
         </div>
     }
 
