@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { BellOutlined, CloseOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Menu, notification, Space } from "antd";
+import { Button, Dropdown, List, Menu, notification, Space } from "antd";
 import axios from "axios"
 
 function Notification() {
     const [notifs, setNotifs] = useState([])
-    // useEffect(async () => {
-    //     getNotifications()
-    // }, [])
+    useEffect(async () => {
+        getNotifications()
+    }, [])
     
     async function pushNotifications() {
         await axios({
@@ -40,10 +40,12 @@ function Notification() {
             <Menu>
                 {notifs.map((data) => {
                     return (
-                    <Menu.Item className="req-list-item">
-                        <p>{data.friendName} is going to buy {data.productName}!</p>
-                        <Button onClick={() => deleteNotification(data._id)} icon={<CloseOutlined />} />
-                    </Menu.Item>)
+                    <List.Item 
+                        className="req-list-item"
+                        actions={[<Button onClick={()  => deleteNotification(data._id)} key="list-loadmore-edit" icon={<CloseOutlined />} />]}>
+                        <h3>{data.friendName} is going to buy {data.productName}!</h3>
+                        {/* <Button onClick={() => deleteNotification(data._id)} icon={<CloseOutlined />} /> */}
+                    </List.Item>)
                 })}
             </Menu>
           }>

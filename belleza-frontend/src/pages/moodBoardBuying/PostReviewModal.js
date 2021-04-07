@@ -1,10 +1,14 @@
-import {Modal, Form, Input, Button} from 'antd'
-import {useState} from 'react'
+import {Modal, Form, Input, Button, Rate} from 'antd'
+import {useState, useEffect} from 'react'
 import { EyeInvisibleOutlined, EyeTwoTone, UserOutlined } from "@ant-design/icons"
 import axios from 'axios'
 import getCurrentUser from '../../services/currentUser';
 
 function PostReviewModal(props){
+
+    const [stars, setStars] = useState(0);
+
+
     const onSubmit = async(values) =>{
         const user = await getCurrentUser();
         console.log(props);
@@ -14,7 +18,7 @@ function PostReviewModal(props){
             text: values.review,
             userId: props.userId,
             productId: props.productId,
-            rating: 5
+            rating: stars
         }, {withCredentials: true})
         console.log(res)
     }
@@ -22,6 +26,13 @@ function PostReviewModal(props){
         <Form onFinish = {onSubmit}>
             <Form.Item  name="review">
             <Input placeholder="Review" prefix={<UserOutlined />} />
+            </Form.Item>
+
+            <Form.Item>
+                <Rate onChange={(nums) => {
+                  setStars(nums);
+                  console.log(nums);
+                }}/>
             </Form.Item>
             <Form.Item>
                 <Button htmlType = "submit">POST</Button>
