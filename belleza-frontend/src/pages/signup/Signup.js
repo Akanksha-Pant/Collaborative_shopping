@@ -21,6 +21,7 @@ function Signup() {
     console.error(error);
   }
     return (
+      <div className="main">
       <div className="Login">
         <Form
           name="basic"
@@ -49,6 +50,7 @@ function Signup() {
              <Button style={{ background: "#c264ff", borderColor: "purple" }} type="primary" htmlType="submit">Signup</Button>
            </Form.Item>
           </Form>
+      </div>
       </div>
     );
   }
