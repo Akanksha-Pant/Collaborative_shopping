@@ -547,6 +547,47 @@ app.post("buylist/add/review", function(req, res) {
       console.log(err);
     } else {
       console.log("Review Added");
+
+      axios.post("http://localhost:5000/buylist/add/rating",{
+        userId: req.body.userId,
+        productId: req.body.productId,
+        rating: req.body.rating
+
+      }, { withCredentials: true });
+    }
+  })
+})
+
+
+app.post("buylist/add/rating", function(req, res) {
+  Buylist.find({
+    userId: req.body.userId,
+    productId: req.body.productId
+  }, function(err, item) {
+    if (err) {
+      console.log(err);
+    } else {
+      const sum = item.rating.sum + req.body.rating;
+      const no = item.rating.no + 1;
+      const avg = sum / no;
+      const rating = {
+        sum: sum,
+        no: no,
+        avg: avg
+      };
+      Buylist.findOneAndUpdate({
+        userId: req.user._id,
+        productId: req.body.productId
+      }, {
+        rating: rating
+      }, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Rating Added");
+
+        }
+      })
     }
   })
 })
@@ -605,37 +646,6 @@ app.get("/buylist/buy/:id", function(req, res){
 })
 
 
-app.post("buylist/add/rating", function(req, res) {
-  Buylist.find({
-    userId: req.body.userId,
-    productId: req.body.productId
-  }, function(err, item) {
-    if (err) {
-      console.log(err);
-    } else {
-      const sum = item.rating.sum + req.body.rating;
-      const no = item.rating.no + 1;
-      const avg = sum / no;
-      const rating = {
-        sum: sum,
-        no: no,
-        avg: avg
-      };
-      Buylist.findOneAndUpdate({
-        userId: req.user._id,
-        productId: req.body.productId
-      }, {
-        rating: rating
-      }, function(err) {
-        if (err) {
-          console.log(err);
-        } else {
-          console.log("Rating Added");
-        }
-      })
-    }
-  })
-})
 
 //boughtlist routes ..........................................
 
