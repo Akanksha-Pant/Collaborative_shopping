@@ -27,7 +27,12 @@ function FindFriend() {
     }
     return (
       <div className="FindFriend">
-         <img style={{height: "20em"}} src={icon} />
+
+      <div className="anim">
+      <lottie-player src="https://assets2.lottiefiles.com/packages/lf20_PEAd1R.json"  background="transparent"  speed="1"  style={{width: "340px"}}  loop autoplay></lottie-player>
+
+      </div>
+
          <Search style={{ width: "70%" }} placeholder="Input friend's username" onSearch={getUsers} enterButton />
          <List
             className="List"

@@ -1,4 +1,9 @@
+body{
+  background-image: url("ff-bg.svg");
+  background-repeat: no-repeat;
+}
 .FindFriend {
+
     width: 80%;
     max-width: 600px;
     margin: 0 auto;
@@ -12,10 +17,17 @@
     text-align: left;
 }
 .ListItem > text {
+
     text-align: left;
 }
 .ListItem > Button {
     margin-right: 0;
     text-align: right;
 }
+.anim{
+  display: flex;
+  margin-left: 110px;
+  text-align: center;
+  border-left: 100px;
 
+}
