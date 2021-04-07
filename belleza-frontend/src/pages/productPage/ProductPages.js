@@ -3,11 +3,12 @@ import {useParams, Link} from 'react-router-dom';
 import React , {useContext, useEffect, useState } from 'react';
 import axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
-import Modal  from 'react-modal';
+//import Modal  from 'react-modal';
 import { ToastContainer, toast } from 'react-toastify';
 import getCurrentUser from "./../../services/currentUser";
+import { Modal, List, Button, Space } from 'antd';
 
-Modal.setAppElement('body');
+//Modal.setAppElement('body');
 toast.configure({hideProgressBar: true})
 
 
@@ -35,14 +36,18 @@ function ProductPage() {
   }, [params, products]);
 
 
-  const onToggleMb_button = () =>{
-    set_mb_ModalState(!mb_modalShow)
+  const showModal = () =>{
+    set_mb_ModalState(true)
+  }
+
+  const hideModal = () =>{
+    set_mb_ModalState(false)
   }
 
   const notifyOnAddingToCart = (prompt) => toast(prompt, {hideProgressBar: true});
 
     return (
-      <body>
+        <>
          <div className = "Card">
         <div className = "ProductImage">
         <img src = {`${detailProduct.image}`}/>
@@ -54,25 +59,46 @@ function ProductPage() {
           <div className = "PriceDetail">Inclusive of all the taxes</div>
         
           <div className = "Buttons">
-            <button id = "MoodBoardButton" onClick = {() => onToggleMb_button}  >ADD TO MOOD BOARD</button>
-            <button id = "CartButton" onClick = {() => notifyOnAddingToCart} >ADD TO CART</button> 
+            <button id = "MoodBoardButton" onClick = {() => showModal()}  >ADD TO MOOD BOARD</button>
+            <button id = "CartButton" onClick = {() => notifyOnAddingToCart("added to cart")} >ADD TO CART</button> 
             <Link    to ={{
               pathname: `/suggest/${params.id}`,}}>
                 <div id = "SuggestButton"   >SUGGEST TO A FRIEND</div></Link>
           </div>
           </div>
       </div>
-
-      <Modal className = "PopUp" isOpen = {mb_modalShow} >
-        <div>
-        <button onClick = {onToggleMb_button}>Close</button>
-        <button> ADD TO WISHLIST</button>
-        <button> ADD TO BUYING BOARD</button>
-        <button> ADD TO BOUGHT BOARD</button>
-        </div>
-      </Modal>
-      </body>
+      <MoodBoardModal isVisible = {mb_modalShow} onHide = {hideModal} userId = {currUser._id} product = {detailProduct}></MoodBoardModal>
+      </>
     );
+  }
+
+  function MoodBoardModal(props){
+
+
+    const addToWishList = async() =>{
+      const res = await axios.post("http://localhost:5000/wishlist/add",{
+        userId: props.userId,
+        product: props.product
+      },{withCredentials: true});
+      console.log(res)
+    }
+
+    const addToBuyBoard = async() =>{
+      const res = await axios.post("http://localhost:5000/buylist/add",{
+        productId:props.product._id,
+        userId: props.userId,
+        product: props.product
+      },{withCredentials: true});
+      console.log(res)
+    }
+
+    return(<Modal visible = {props.isVisible} onCancel = {() => props.onHide()} onHide = {() => props.onHide()}>
+      <List bordered>
+        <List.Item >Add to Wishlist <Button onClick = {() => addToWishList()}>Add</Button></List.Item>
+        <List.Item>Add to Buy Board<Button onClick = {() =>addToBuyBoard() }>Add</Button></List.Item>
+        </List>      
+      <div></div>
+    </Modal>);
   }
   
 export default ProductPage;

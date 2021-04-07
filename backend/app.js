@@ -474,7 +474,7 @@ app.get("/wishlist", function(req, res) {
 
 //Buylist routes -----------------------------------------
 
-app.post("buylist/add", function(req, res) {
+app.post("/buylist/add", function(req, res) {
   const buy = new Buylist({
     userId: req.body.userId,
     productId: req.body.productId,
