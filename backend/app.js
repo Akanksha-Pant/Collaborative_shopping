@@ -122,6 +122,13 @@ const boughtlistSchema = new mongoose.Schema({
   }
 });
 
+const notificationListSchema = new mongoose.Schema({
+  userId: String,
+  friendId: String,
+  friendName: String,
+  productName: String
+})
+
 userSchema.plugin(passportLocalMongoose);
 userSchema.plugin(findOrCreate);
 
@@ -131,6 +138,8 @@ const SuggestionBox = new mongoose.model("SuggestionBox", suggestionBoxSchema);
 const Wishlist = new mongoose.model("Wishlist", wishlistSchema);
 const Buylist = new mongoose.model("Buylist", buylistSchema);
 const Boughtlist = new mongoose.model("Boughtlist", boughtlistSchema);
+const Notificationlist = new mongoose.model("Notificationlist", notificationListSchema);
+
 
 
 passport.use('user-local', new LocalStrategy(User.authenticate()));
@@ -189,15 +198,15 @@ app.post("/login", function(req, res) {
 
 app.get("/profile", (req, res) => {
 
-  User.find({_id: req.user._id}, function(err, user){
-    if (err){
+  User.find({
+    _id: req.user._id
+  }, function(err, user) {
+    if (err) {
       console.log(err);
-    }
-    else{
-      if (user.length == 0){
+    } else {
+      if (user.length == 0) {
         res.send({});
-      }
-      else{
+      } else {
         res.send(user[0])
       }
     }
@@ -205,12 +214,13 @@ app.get("/profile", (req, res) => {
   // res.send(req.user);
 });
 
-app.get("/user/:id", function(req, res){
-  User.find({_id: req.params.id}, function(err, user){
-    if (err){
+app.get("/user/:id", function(req, res) {
+  User.find({
+    _id: req.params.id
+  }, function(err, user) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("User found successfully");
       res.send(user);
     }
@@ -227,8 +237,10 @@ app.get("/products", (req, res) => {
 });
 
 app.get("/search", (req, res) => {
-    const username = (req.query.username)
-    User.find({ 'username': username }, function(err, users) {
+  const username = (req.query.username)
+  User.find({
+    'username': username
+  }, function(err, users) {
     if (err) {
       console.log(err);
     }
@@ -241,11 +253,10 @@ app.get("/request/:to/:from", function(req, res) {
   const to = req.params.to;
   const from = req.params.from;
 
-  if (to === from){
+  if (to === from) {
     console.log("You can't send a request to yourself");
 
-  }
-  else{
+  } else {
     User.find({
       _id: from
     }, function(err, fromUser) {
@@ -261,7 +272,9 @@ app.get("/request/:to/:from", function(req, res) {
 
         User.findOneAndUpdate({
           _id: to,
-          "requests._id": { $ne: fromUser._id }
+          "requests._id": {
+            $ne: fromUser._id
+          }
         }, {
           $push: {
             requests: newRequest
@@ -296,7 +309,9 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
 
   User.findOneAndUpdate({
     _id: to,
-    "friends._id": { $ne: from }
+    "friends._id": {
+      $ne: from
+    }
   }, {
     $push: {
       friends: fromFriend
@@ -308,7 +323,9 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
       console.log(`friend ${toName}, ${fromName} saved successfully.`);
       User.findOneAndUpdate({
         _id: from,
-        "friends._id": { $ne: to }
+        "friends._id": {
+          $ne: to
+        }
       }, {
         $push: {
           friends: toFriend
@@ -320,11 +337,11 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
           console.log(`friend ${toName}, ${fromName} saved successfully.`);
           // Deleting the pending request
 
-              axios({
-                  method: "GET",
-                  withCredentials: true,
-                  url: "http://localhost:5000/delete/" + to + "/" + from
-                })
+          axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/delete/" + to + "/" + from
+          })
         }
       })
     }
@@ -333,75 +350,81 @@ app.get("/accept/:toName/:toId/:fromName/:fromId", function(req, res) {
 
 })
 
-app.get("/delete/:to/:from", function(req, res){
+app.get("/delete/:to/:from", function(req, res) {
   const to = req.params.to;
   const from = req.params.from;
 
-  User.find({_id: to}, function(err, user){
+  User.find({
+    _id: to
+  }, function(err, user) {
 
 
-      requests = user[0].requests;
+    requests = user[0].requests;
 
-      requests = requests.filter(function(request){
-        return (request._id != from);
-      })
+    requests = requests.filter(function(request) {
+      return (request._id != from);
+    })
 
 
-      User.updateOne({_id: to}, {requests: requests}, function(err){
-        if (err){
-          console.log(err);
-        }
-        else{
-          console.log("Request deleted here");
+    User.updateOne({
+      _id: to
+    }, {
+      requests: requests
+    }, function(err) {
+      if (err) {
+        console.log(err);
+      } else {
+        console.log("Request deleted here");
 
-        }
-      })
+      }
+    })
   })
 })
 
 //suggestionBox routes --------------------------------
 
 
-app.post("/suggestion/add", function(req, res){
+app.post("/suggestion/add", function(req, res) {
   console.log(req.body);
-  SuggestionBox.findOneAndUpdate(
-    {
-      userId: req.body.userId,
-      friendId: req.body.friendId,
-      friendName: req.body.friendName,
-      product: req.body.product
-    },
-  {
+  SuggestionBox.findOneAndUpdate({
+    userId: req.body.userId,
+    friendId: req.body.friendId,
+    friendName: req.body.friendName,
+    product: req.body.product
+  }, {
     userId: req.body.userId
-  }, {upsert: true}, function(err){
-      if (err){
-        console.log(err);
-      }
-      else{
-        console.log("Suggestion saved");
-      }
-    })
+  }, {
+    upsert: true
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Suggestion saved");
+    }
+  })
 })
 
 
-app.get("/suggestion/delete/:id", function(req, res){
-  SuggestionBox.deleteOne({_id: req.params.id}, function(err){
-    if (err){
+app.get("/suggestion/delete/:id", function(req, res) {
+  SuggestionBox.deleteOne({
+    _id: req.params.id
+  }, function(err) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("Product deleted from suggestions successfully");
     }
   })
 })
 
-app.get("/suggestion", function(req, res){
+app.get("/suggestion", function(req, res) {
 
-  SuggestionBox.find({userId: req.user._id}, function(err, products){
-    if (err){
+  SuggestionBox.find({
+    userId: req.user._id
+  }, function(err, products) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("Suggestion products found successfully");
       res.send(products);
     }
@@ -410,38 +433,39 @@ app.get("/suggestion", function(req, res){
 
 //wishlist routes -------------------------------------------
 
-app.post("/wishlist/add", function(req, res){
+app.post("/wishlist/add", function(req, res) {
   const wish = new Wishlist({
     userId: req.body.userId,
     product: req.body.product
   })
   wish.save((err) => {
-    if (err){
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("Product added to wishlist");
     }
   })
 })
 
-app.get("/wishlist/delete/:id", function(req, res){
-  Wishlist.deleteOne({_id: req.params.id}, function(err){
-    if (err){
+app.get("/wishlist/delete/:id", function(req, res) {
+  Wishlist.deleteOne({
+    _id: req.params.id
+  }, function(err) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("Product deleted from wishlist successfully");
     }
   })
 })
 
-app.get("/wishlist", function(req, res){
-  Wishlist.find({userId: req.user._id}, function(err, products){
-    if (err){
+app.get("/wishlist", function(req, res) {
+  Wishlist.find({
+    userId: req.user._id
+  }, function(err, products) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("wishlist products found successfully");
       res.send(products);
     }
@@ -450,7 +474,7 @@ app.get("/wishlist", function(req, res){
 
 //Buylist routes -----------------------------------------
 
-app.post("buylist/add", function(req, res){
+app.post("buylist/add", function(req, res) {
   const buy = new Buylist({
     userId: req.body.userId,
     productId: req.body.productId,
@@ -462,129 +486,201 @@ app.post("buylist/add", function(req, res){
     }
   })
   buy.save((err) => {
-    if (err){
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("Product added to buylist");
     }
   })
 })
 
-app.post("buylist/add/review", function(req, res){
+app.post("buylist/add/review", function(req, res) {
   const newReview = {
     friendId: req.body.friendId,
     friendName: req.body.friendName,
     text: req.body.text
   };
-  Buylist.findOneAndUpdate({userId : req.user._id, productId: req.body.productId}, {
-        $push: {review: newReview}
-      }, function(err){
-        if (err){
-          console.log(err);
-        }
-        else{
-          console.log("Review Added");
-        }
-    })
+  Buylist.findOneAndUpdate({
+    userId: req.user._id,
+    productId: req.body.productId
+  }, {
+    $push: {
+      review: newReview
+    }
+  }, function(err) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Review Added");
+    }
+  })
 })
 
-app.get("/buylist/:id", function(req, res){
-  Buylist.find({userId: req.params.id}, function(err, products){
-    if (err){
+app.get("/buylist/:id", function(req, res) {
+  Buylist.find({
+    userId: req.params.id
+  }, function(err, products) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("Products found successfully");
       res.send(products);
     }
   })
 })
 
-app.get("/buylist/delete/:id", function(req, res){
-  Buylist.deleteOne({_id: req.params.id}, function(err){
-    if (err){
+app.get("/buylist/delete/:id", function(req, res) {
+  Buylist.deleteOne({
+    _id: req.params.id
+  }, function(err) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       console.log("Item deleted from buyList");
     }
   })
 })
 
-app.get("/buylist/buy/:id", function(req, res){
-  BuyList.find({_id: req.params.id}, function(err, item){
+app.get("/buylist/buy/:id", function(req, res) {
+  Buylist.find({
+    _id: req.params.id
+  }, function(err, item) {
     const bought = new Boughtlist({
       userId: item.userId,
       product: item.product
     })
     bought.save((err) => {
-      if (err){
+      if (err) {
         console.log(err);
-      }
-      else{
+      } else {
         console.log("Product added to buylist");
-            axios({
-            method: "GET",
-            withCredentials: true,
-            url: "http://localhost:5000/buylist/delete/" + item._id
-          })
+
+        axios({
+          method: "GET",
+          withCredentials: true,
+          url: "http://localhost:5000/buylist/delete/" + item._id
+        })
+        console.log(product);
+        axios.post("http://localhost:5000/notification/add",{
+          productName: product.name
+        }, { withCredentials: true });
+
       }
     })
   })
 })
 
 
-app.post("buylist/add/rating", function(req, res){
-Buylist.find({userId : req.user._id, productId: req.body.productId}, function(err, item){
-  if (err){
-    console.log(err);
-  }
-  else{
-    const sum = item.rating.sum + req.body.rating;
-    const no = item.rating.no + 1;
-    const avg = sum / no;
-    const rating = {
-      sum: sum,
-      no: no,
-      avg: avg
-    };
-    Buylist.findOneAndUpdate({userId : req.user._id, productId: req.body.productId},
-      {rating: rating}, function(err){
-          if (err){
-            console.log(err);
-          }
-          else{
-            console.log("Rating Added");
-          }
+app.post("buylist/add/rating", function(req, res) {
+  Buylist.find({
+    userId: req.user._id,
+    productId: req.body.productId
+  }, function(err, item) {
+    if (err) {
+      console.log(err);
+    } else {
+      const sum = item.rating.sum + req.body.rating;
+      const no = item.rating.no + 1;
+      const avg = sum / no;
+      const rating = {
+        sum: sum,
+        no: no,
+        avg: avg
+      };
+      Buylist.findOneAndUpdate({
+        userId: req.user._id,
+        productId: req.body.productId
+      }, {
+        rating: rating
+      }, function(err) {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Rating Added");
+        }
       })
-  }
-})
+    }
+  })
 
 })
 
 //boughtlist routes ..........................................
 
-app.get("/boughtlist/:id", function(req, res){
-  Boughtlist.find({userId: req.params.id}, function(err, products){
-    if (err){
+app.get("/boughtlist/:id", function(req, res) {
+  Boughtlist.find({
+    userId: req.params.id
+  }, function(err, products) {
+    if (err) {
       console.log(err);
-    }
-    else{
+    } else {
       res.send(products);
     }
   })
 })
 
+//Notification routes -----------------------------------------
+app.post("/notification/add", function(req, res) {
 
-
-app.get("/logout", function(req, res){
-req.logout();
-  req.session.destroy(function(err){
-    if (err){
+  User.find({
+    _id: req.user._id
+  }, function(err, user) {
+    if (err) {
       console.log(err);
+    } else {
+      friends = user[0].friends
+      friends.forEach((friend) => {
+
+        const notif = new Notificationlist({
+          userId: friend._id,
+          productName: req.body.productName,
+          friendName: req.user.username,
+          friendId: req.user._id
+
+        })
+        notif.save((err) => {
+          if (err) {
+            console.log(err);
+          } else {
+            console.log(`Notification for ${friend.name} saved successfully`);
+          }
+        })
+      })
     }
-    else{
+  })
+})
+
+app.get("/notification", function(req, res) {
+  Notificationlist.find({
+    userId: req.user._id
+  }, function(err, notifs) {
+    if (err) {
+      console.log(err);
+    } else {
+      res.send(notifs);
+    }
+  })
+})
+
+app.get("/notification/delete/:id", function(req, res) {
+  Notificationlist.deleteOne({
+    userId: req.user._id,
+    _id: req.params.id
+  }, function(err, notifs) {
+    if (err) {
+      console.log(err);
+    } else {
+      console.log("Post deleted");
+    }
+  })
+})
+
+
+app.get("/logout", function(req, res) {
+  req.logout();
+  req.session.destroy(function(err) {
+    if (err) {
+      console.log(err);
+    } else {
       console.log("session destroyed");
       res.send("Successfully logged out")
     }
