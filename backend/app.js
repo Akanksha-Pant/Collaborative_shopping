@@ -536,7 +536,7 @@ app.post("buylist/add/review", function(req, res) {
     text: req.body.text
   };
   Buylist.findOneAndUpdate({
-    userId: req.user._id,
+    userId: req.body.userId,
     productId: req.body.productId
   }, {
     $push: {
@@ -607,7 +607,7 @@ app.get("/buylist/buy/:id", function(req, res){
 
 app.post("buylist/add/rating", function(req, res) {
   Buylist.find({
-    userId: req.user._id,
+    userId: req.body.userId,
     productId: req.body.productId
   }, function(err, item) {
     if (err) {
