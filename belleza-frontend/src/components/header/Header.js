@@ -18,7 +18,7 @@ function CurrentUserDetails ({currentUser}) {
     </Link>)
   else
     return (
-    <Button type="primary" shape="circle">
+    <Button style={{backgroundColor: "#b0a4da", borderColor: "#b0a4da", right: 0}} type="primary" shape="circle">
       <Link to="/profile">{currentUser.username[0]}</Link>
     </Button>)
 }
@@ -28,10 +28,9 @@ function Header() {
   const [ currentUser, setCurrentUser ] = useState()
 
   useEffect(() => {
-    return async () => {
-      const user = await getCurrentUser(); 
-      setCurrentUser(user);
-    }
+      getCurrentUser().then((data) =>{
+        setCurrentUser(data);
+      }); 
   });
   const handleClick = (e) => {
     setCurrentTab(e.key);
@@ -39,7 +38,7 @@ function Header() {
   
     return (
       <Space className="Header">
-          <Menu onClick={handleClick} selectedKeys={[currentTab]} mode="horizontal">
+          <Menu className="menu" onClick={handleClick} selectedKeys={[currentTab]} mode="horizontal">
             <Menu.Item key="mail" icon={<MailOutlined />}>
               <Link to="/">Home</Link>
             </Menu.Item>
@@ -51,6 +50,7 @@ function Header() {
             <FriendRequest />
             <Notifications />
             <CurrentUserDetails currentUser={currentUser}/>
+            {/* <div></div> */}
             {/* { currentUserDetails() }             */}
             {/* <img style={{height: "3em"}} src={SearchFriend} /> */}
           </Menu>

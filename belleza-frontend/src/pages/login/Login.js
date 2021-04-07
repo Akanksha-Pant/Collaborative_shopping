@@ -16,7 +16,8 @@ function Login() {
       },
       withCredentials: true,
       url: "http://localhost:5000/login"
-    }).then((res) => console.log(res));
+    }).then((res) =>  window.location.href = "/profile")
+    .catch((err) => console.log(err));
   }
   const submitFormFailed = (error) => {
     console.error(error);
