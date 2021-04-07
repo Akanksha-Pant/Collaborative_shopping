@@ -3,27 +3,27 @@
   box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
   width: 1100px;
   height: 500px;
-  margin-top: 40px;
-  
-  margin-left: 15.5%;
-  position: relative;  
+
+
+  margin: 40px auto;
+  position: relative;
 }
 
 
 .ProductImage{
   width: 300px;
-  height: 300px;  
+  height: 300px;
   margin-left: 30px;
   margin-top: 30px;
   margin-right: 60px;
   margin-bottom: 50px;
-  float: left; 
+  float: left;
 }
 .ProductName h2{
-  font-size: xx-large;   
+  font-size: xx-large;
   font-weight: bolder;
   text-align: start;
-  margin: 10px;  
+  margin: 10px;
  }
 
  .Buttons{
@@ -32,10 +32,10 @@
  }
 
  .ProductPrice h2{
-   font-size: large;   
+   font-size: large;
    color: darkgrey;
    text-align: start;
-   margin: 10px;  
+   margin: 10px;
   }
   .ProductDescription{
     text-align: start;
@@ -47,6 +47,7 @@
   }
 
 #MoodBoardButton{
+    cursor: pointer;
     font-weight: bold;
     width: 200px;
     border: none;
@@ -54,24 +55,31 @@
     background-color: darkorchid;
     color: white;
     margin: 10px;
-} 
+}
 
 #CartButton{
- align-items: initial;     
+  cursor: pointer;
+ align-items: initial;
  font-weight: bold;
  width: 200px;
  border: none;
  height: 50px;
  margin: 10px;
  background-color: rgb(220, 211, 240);
-} 
+}
 
-#SuggestButton{    
+#SuggestButton{
+  background-color: #820BBB;
+  color: white;
   font-weight: bold;
   width: 200px;
   border: none;
   height: 50px;
   margin: 10px;
+  padding: auto;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 
@@ -90,7 +98,7 @@
   width:  300px;
   height: 400px;
   margin: 10px;
-  
+
 }
 
 .PopHeader{
@@ -124,33 +132,3 @@
   height: 420px;
   overflow-y: scroll;
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
