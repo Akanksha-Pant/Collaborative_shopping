@@ -529,7 +529,7 @@ app.post("/buylist/add", function(req, res) {
   })
 })
 
-app.post("buylist/add/review", function(req, res) {
+app.post("/buylist/add/review", function(req, res) {
   const newReview = {
     friendId: req.body.friendId,
     friendName: req.body.friendName,
