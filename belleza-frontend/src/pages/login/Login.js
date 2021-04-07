@@ -21,6 +21,7 @@ function Login() {
     console.error(error);
   }
     return (
+      <div className="main">
       <div className="Login">
         <Form
           name="basic"
@@ -32,7 +33,7 @@ function Login() {
              rules={[
                { required:true, message: "Please input username!" }
              ]}>
-            <Input placeholder="username or email" prefix={<UserOutlined />} />
+            <Input placeholder="Username or Email" prefix={<UserOutlined />} />
            </Form.Item>
            <Form.Item
              label="Password"
@@ -41,17 +42,18 @@ function Login() {
               { required:true, message: "Please input password!" }
             ]}>
             <Input.Password
-              placeholder="password"
+              placeholder="Password"
               iconRender={visible => (visible ? <EyeTwoTone /> : <EyeInvisibleOutlined />)}
             />
            </Form.Item>
            <Form.Item>
-             <Button style={{ background: "#c264ff", borderColor: "purple" }} type="primary" htmlType="submit">Login</Button>
+             <Button style={{ background: "#c264ff", borderColor: "purple" }} type="primary" htmlType="submit" >Login</Button>
            </Form.Item>
           </Form>
           <Button style={{ color: "mauve"}}  type="link" htmlType="button">
               Create new account
           </Button>
+      </div>
       </div>
     );
   }

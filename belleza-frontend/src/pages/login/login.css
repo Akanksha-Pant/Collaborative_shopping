@@ -1,9 +1,34 @@
-.Login {
-    max-width: 250px;
-    margin: 0 auto;
-    /* display: grid; */
-    /* row-gap: 10%; */
+.main{
+
+  background-image: url("login-bg.svg");
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  padding: 7%;
+
 }
+.Login {
+    box-shadow: 0 5px 20px 0 rgb(69 90 100 / 8%);
+    max-width: 650px;
+    margin: auto;
+    padding: 6%;
+
+}
+
 .Login > * {
-    margin-top:20px;
+    margin: auto;
+    font-size: 15px;
+}
+.ant-col{
+
+  padding: 2%;
+
+}
+.ant-form-item-required{
+  font-size: 28px;
+}
+label{
+  font-size: 20px !important;
+  color: rgb(194 100 255) !important;
 }
