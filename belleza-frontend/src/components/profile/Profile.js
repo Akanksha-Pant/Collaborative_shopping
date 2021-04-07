@@ -75,8 +75,8 @@ function Profile({isSelfProfile, user}) {
             <div className="moodboard-container">
                 <Link to ={{
               pathname: `/wishList/${user._id}`,}}><MoodboardCard name="Wishlist" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /></Link>
-                <MoodboardCard name="Buying" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
-                <MoodboardCard name="Bought" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" />
+                <Link to = {{pathname: `/buyList/${user._id}`}}><MoodboardCard name="Buying" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /></Link>
+                <Link to = {{pathname: `/boughtList/${user._id}`}} ><MoodboardCard name="Bought" imageURL="https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png" /></Link>
             </div>
             <SuggestionBoard isSelf={isSelfProfile} />
         </div>
