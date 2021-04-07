@@ -35,7 +35,7 @@ function ProductPage() {
   }, [params, products]);
 
 
-  const onToggleMb_button = (isCloseButton) =>{
+  const onToggleMb_button = () =>{
     set_mb_ModalState(!mb_modalShow)
   }
 
@@ -64,15 +64,11 @@ function ProductPage() {
       </div>
 
       <Modal className = "PopUp" isOpen = {mb_modalShow} >
-        <div className = "PopHeader"> Add to your MoodBoard!
-        <div className = "spacingBlock"></div>
+        <div>
         <button onClick = {onToggleMb_button}>Close</button>
-        </div>
-        <div className = "PopBody">
-        <img src = {`${detailProduct.image}`}   className = "PopUpImage"/>
-        <div className = "CardList">
-
-         </div>
+        <button> ADD TO WISHLIST</button>
+        <button> ADD TO BUYING BOARD</button>
+        <button> ADD TO BOUGHT BOARD</button>
         </div>
       </Modal>
       </body>
