@@ -97,10 +97,10 @@ function BuyList(){
        }, [params]);
 
     if(isSelfProfile){
-        return buyList.map(CardIfAccountHolder);
+        return <div>{buyList.map(CardIfAccountHolder)}</div>;
     }
     else{
-        return buyList.map(CardIfViewer);
+        return <div>{buyList.map(CardIfViewer)}</div>;
     }
 }
 export default BuyList;
