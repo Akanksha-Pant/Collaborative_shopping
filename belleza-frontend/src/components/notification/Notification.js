@@ -1,16 +1,53 @@
-import { BellOutlined } from '@ant-design/icons';
-import { Button, Dropdown, Menu, Space } from "antd";
+import { useState, useEffect } from "react";
+import { BellOutlined, CloseOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu, notification, Space } from "antd";
+import axios from "axios"
 
 function Notification() {
+    const [notifs, setNotifs] = useState([])
+    // useEffect(async () => {
+    //     getNotifications()
+    // }, [])
+    
+    async function pushNotifications() {
+        await axios({
+            method: "POST",
+            withCredentials: true,
+            data:{ productName:"Antheia" },
+            url: "http://localhost:5000/notification/add"
+        }).then(() => console.log("done"))
+    }
+    async function deleteNotification(id) {
+        await axios({
+            method: "GET",
+            withCredentials: true,
+            // data: {id: id},
+            url: "http://localhost:5000/notification/delete/" + id
+        }).catch((err) => console.log("you messed uppp"))
+    }
+    async function getNotifications() {
+        await axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/notification"
+        }).then((res) => {
+            console.log(res.data)
+            setNotifs(res.data)
+        }).catch((err) => console.log("you messed uppp"))
+    }
     return (
         <Dropdown overlay={
             <Menu>
-                <Menu.Item>sgh</Menu.Item>
-                <Menu.Item>sgh</Menu.Item>
-                <Menu.Item>sgh</Menu.Item>
+                {notifs.map((data) => {
+                    return (
+                    <Menu.Item className="req-list-item">
+                        <p>{data.friendName} is going to buy {data.productName}!</p>
+                        <Button onClick={() => deleteNotification(data._id)} icon={<CloseOutlined />} />
+                    </Menu.Item>)
+                })}
             </Menu>
           }>
-            <Button icon={<BellOutlined />} />
+            <Button onClick={getNotifications} icon={<BellOutlined />} />
         </Dropdown>
     )
 }
