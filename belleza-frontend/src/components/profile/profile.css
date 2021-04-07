@@ -1,3 +1,4 @@
+@import url('https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap');
 .userAvatar {
     height: 100px;
     width:100px;
@@ -14,8 +15,32 @@
     margin: 0 auto;
 }
 .moodboard-container {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr;
-    /* max-width: 500px; */
+    max-width: 1000px;
     margin: 0 auto;
+}
+.boards-icon {
+    object-fit: scale-down;
+}
+.suggestion-card {
+    width: 50%;
+    max-width: 700px;
+    margin: 0 auto;
+}
+.border-thick {
+    border: 3px solid #ececee;
+    background-color: #f0f0f3;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: large;
+    color: rgb(162, 129, 175);
+}
+.background-purple {
+    padding: 2%;
+    background-color: #e8e6f1;
+}
+.button-purple {
+    border-color: #cdc6e4;
+}
+.text-style {
+    font-family: 'Great Vibes', cursive;
+    font-size: 250%;
 }
