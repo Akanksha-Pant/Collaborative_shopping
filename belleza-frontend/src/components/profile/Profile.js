@@ -30,7 +30,7 @@ function MoodboardCard({name, imageURL}) {
 
 function SuggestionBoard({isSelf}) {
     if (isSelf == true) {
-        return <Card className="suggestion-card border-thick">Suggestion From Friends</Card>
+        return <Link to="/suggestionBox"><Card className="suggestion-card border-thick">Suggestion From Friends</Card></Link>
     }
     return "";
 }
@@ -65,7 +65,7 @@ function FriendComponent(user) {
                     bordered
                     dataSource={user.user.friends}
                     renderItem={friend => (
-                    <List.Item>
+                    <List.Item style={{display: "grid", gridTemplateColumns:"3fr 1fr"}}>
                         {friend.name}<Button onClick={() => redirectToFriend(friend._id)}>View profile</Button>
                     </List.Item>)}
                 />

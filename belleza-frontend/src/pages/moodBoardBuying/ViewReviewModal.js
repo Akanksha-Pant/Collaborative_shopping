@@ -8,16 +8,15 @@ function ViewReviewsModal(props){
     useEffect(() => { 
         setReviewList(props.reviewList);
        }, [reviewList]);
-       console.log(reviewList.length);
+       console.log(reviewList);
     const reviewCard = (data) =>{
-        return <div>{data.friendName}</div>
+        return <div>{data.friendName}{data.text}</div>
     }
    
    
        
        return<Modal visible = {props.visible} onCancel = {() => props.onHide()}>
-           <div>Hellooo from Modal</div>
-           <div> {reviewList.map(reviewCard)}</div>
+           <div> {props.reviewList.map(reviewCard)}</div>
        </Modal>  
    
 }
