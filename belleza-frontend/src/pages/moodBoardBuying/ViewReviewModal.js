@@ -8,7 +8,7 @@ function ViewReviewsModal(props){
     useEffect(() => {
         setReviewList(props.reviewList);
        }, [reviewList]);
-       console.log(reviewList.length);
+       console.log(reviewList);
     const reviewCard = (data) =>{
         return (<div>{data.friendName} {data.text}</div>)
     }

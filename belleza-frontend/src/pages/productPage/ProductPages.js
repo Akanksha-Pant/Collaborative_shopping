@@ -94,8 +94,8 @@ function ProductPage() {
 
     return(<Modal visible = {props.isVisible} onCancel = {() => props.onHide()} onHide = {() => props.onHide()}>
       <List bordered>
-        <List.Item >Add to Wishlist <Button onClick = {() => addToWishList()}>Add</Button></List.Item>
-        <List.Item>Add to Buy Board<Button onClick = {() =>addToBuyBoard() }>Add</Button></List.Item>
+        <List.Item style={{display:"grid", gridTemplateColumns:"3fr 1fr"}} >Add to Wishlist <Button onClick = {() => addToWishList()}>Add</Button></List.Item>
+        <List.Item style={{display:"grid", gridTemplateColumns:"3fr 1fr"}}>Add to Buy Board<Button onClick = {() =>addToBuyBoard() }>Add</Button></List.Item>
         </List>      
       <div></div>
     </Modal>);
