@@ -30,7 +30,7 @@ function MoodboardCard({name, imageURL}) {
 
 function SuggestionBoard({isSelf}) {
     if (isSelf == true) {
-        return <Card className="suggestion-card border-thick">Suggestion From Friends</Card>
+        return <Link to="/suggestionBox"><Card className="suggestion-card border-thick">Suggestion From Friends</Card></Link>
     }
     return "";
 }
@@ -65,7 +65,7 @@ function FriendComponent(user) {
                     bordered
                     dataSource={user.user.friends}
                     renderItem={friend => (
-                    <List.Item>
+                    <List.Item style={{display: "grid", gridTemplateColumns:"3fr 1fr"}}>
                         {friend.name}<Button onClick={() => redirectToFriend(friend._id)}>View profile</Button>
                     </List.Item>)}
                 />
@@ -85,17 +85,12 @@ function Profile({isSelfProfile = false, user}) {
             </div>
 
             <Row className="moodboard-container">
-            <Link to ={{
-              pathname: `/wishList/${user._id}`,}}><Col span={8}><MoodboardCard name="Wishlist" imageURL={WishlistIcon} /></Col></Link>
-              <Link to = {{pathname: `/buyList/${user._id}`}}>                <Col span={8}><MoodboardCard name="Buying" imageURL={BuyingIcon} /></Col>
-</Link>
-                <Link to = {{pathname: `/boughtList/${user._id}`}} ><Col span={8}><MoodboardCard name="Brought" imageURL={BroughtIcon} /></Col>
-</Link>
-
-
+                <Link to = {{pathname: `/boughtList/${user._id}`}} ><Col span={8}><MoodboardCard name="Brought" imageURL={BroughtIcon} /></Col></Link>
+                <Link to = {{pathname: `/buyList/${user._id}`}}><Col span={8}><MoodboardCard name="Buying" imageURL={BuyingIcon} /></Col></Link>
+                <Link to ={{ pathname: `/wishList/${user._id}`,}}><Col span={8}><MoodboardCard name="Wishlist" imageURL={WishlistIcon} /></Col></Link>
             </Row>
             <div className="">
-            <SuggestionBoard isSelf={isSelfProfile} />
+                <SuggestionBoard isSelf={isSelfProfile} />
             </div>
         </div>
     )
