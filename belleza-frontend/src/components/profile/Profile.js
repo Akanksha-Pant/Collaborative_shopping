@@ -5,7 +5,7 @@ import BuyingIcon from "./buying.svg";
 import { Link } from "react-router-dom";
 import BroughtIcon from "./brought.svg";
 import WishlistIcon from "./wishlist.svg";
-
+import ProfileIcon from "./profile.jpeg";
 
 const { Search } = Input;
 
@@ -56,6 +56,7 @@ function FriendComponent(user) {
 
     return (
         <div>
+            {/* <Button className="button-purple" onClick={showModal}><img style={{height:"inherit"}} src={ProfileIcon} /></Button> */}
             <Button className="button-purple" onClick={showModal}>Friends: {user.user.friends.length}</Button>
             {console.log(user.user.friends)}
             <Modal
@@ -79,7 +80,7 @@ function Profile({isSelfProfile = false, user}) {
     return (
         <div>
             <div className="background-purple">
-                <Avatar className="userAvatar">{user.username[0]}</Avatar>
+                <Avatar className="userAvatar" icon={<div style={{fontSize: "400%", marginTop: "30px"}}>{user.username[0]}</div>}></Avatar>
                 <h2 className="text-style">{user.username}</h2>
                 <FriendComponent user={user} />
             </div>
