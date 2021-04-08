@@ -85,17 +85,12 @@ function Profile({isSelfProfile = false, user}) {
             </div>
 
             <Row className="moodboard-container">
-            <Link to ={{
-              pathname: `/wishList/${user._id}`,}}><Col span={8}><MoodboardCard name="Wishlist" imageURL={WishlistIcon} /></Col></Link>
-              <Link to = {{pathname: `/buyList/${user._id}`}}>                <Col span={8}><MoodboardCard name="Buying" imageURL={BuyingIcon} /></Col>
-</Link>
-                <Link to = {{pathname: `/boughtList/${user._id}`}} ><Col span={8}><MoodboardCard name="Brought" imageURL={BroughtIcon} /></Col>
-</Link>
-
-
+                <Link to = {{pathname: `/boughtList/${user._id}`}} ><Col span={8}><MoodboardCard name="Brought" imageURL={BroughtIcon} /></Col></Link>
+                <Link to = {{pathname: `/buyList/${user._id}`}}><Col span={8}><MoodboardCard name="Buying" imageURL={BuyingIcon} /></Col></Link>
+                <Link to ={{ pathname: `/wishList/${user._id}`,}}><Col span={8}><MoodboardCard name="Wishlist" imageURL={WishlistIcon} /></Col></Link>
             </Row>
             <div className="">
-            <SuggestionBoard isSelf={isSelfProfile} />
+                <SuggestionBoard isSelf={isSelfProfile} />
             </div>
         </div>
     )
