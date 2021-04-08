@@ -31,8 +31,11 @@ function BuyList(){
 
 
     const deleteData =async (id) => {
-        const res = await axios.get(`http://localhost:5000/buylist/delete/${id}`, {withCredentials : true});
-        console.log(res);
+        axios.get(`http://localhost:5000/buylist/delete/${id}`, {withCredentials : true});
+        const res = await axios.get(`http://localhost:5000/buylist/${params.id}`, {withCredentials: true});
+        console.log(res.data);
+        setBuyList(res.data)
+
     }
 
 
@@ -67,7 +70,7 @@ function BuyList(){
         <div><Button className = "buyList_delete" onClick = {() => deleteData(data._id)}> DELETE</Button>
                 <Button className = "buyList_buy">BUY</Button></div>
         <div><Button block ={true} onClick = {() =>viewReviewModal()}>Review</Button></div>
-         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review}/>         
+         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review}/>
         </div>
     }
 
@@ -92,7 +95,7 @@ function BuyList(){
         </div>
     }
 
-    useEffect(async () => { 
+    useEffect(async () => {
         getBuyListdata(params.id);
         checkIsSelfProfile();
        }, [params]);
