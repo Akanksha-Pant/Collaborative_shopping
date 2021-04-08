@@ -92,7 +92,7 @@ function ProductPage() {
       console.log(res)
     }
 
-    return(<Modal visible = {props.isVisible} onCancel = {() => props.onHide()} onHide = {() => props.onHide()}>
+    return(<Modal visible = {props.isVisible} onCancel = {() => props.onHide()} onHide = {() => props.onHide()} onOk ={() => props.onHide()} >
       <List bordered>
         <List.Item style={{display:"grid", gridTemplateColumns:"3fr 1fr"}} >Add to Wishlist <Button onClick = {() => addToWishList()}>Add</Button></List.Item>
         <List.Item style={{display:"grid", gridTemplateColumns:"3fr 1fr"}}>Add to Buy Board<Button onClick = {() =>addToBuyBoard() }>Add</Button></List.Item>
