@@ -477,6 +477,12 @@ app.get("/wishlist/buy/:id", function(req, res) {
   Wishlist.find({
     _id: req.params.id
   }, function(err, item) {
+    if (err){
+      console.log(err);
+    }
+    else{
+
+
     item = item[0];
     console.log(item);
     const buy = new Buylist({
@@ -507,6 +513,7 @@ app.get("/wishlist/buy/:id", function(req, res) {
 
       }
     })
+  }
   })
 })
 
@@ -678,7 +685,7 @@ app.get("/buylist/buy/:id", function(req, res){
           withCredentials: true,
           url: "http://localhost:5000/buylist/delete/" + item._id
         })
-        
+
 
       }
     })
