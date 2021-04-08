@@ -31,8 +31,18 @@ function BuyList(){
 
 
     const deleteData =async (id) => {
-        const res = await axios.get(`http://localhost:5000/buylist/delete/${id}`, {withCredentials : true});
-        console.log(res);
+        axios.get(`http://localhost:5000/buylist/delete/${id}`, {withCredentials : true});
+        const res = await axios.get(`http://localhost:5000/buylist/${params.id}`, {withCredentials: true});
+        console.log(res.data);
+        setBuyList(res.data)
+
+    }
+
+    const buy = async(id) =>{
+        axios.get(`http://localhost:5000/buylist/buy/${id}`, {withCredentials: true})
+        const res = await axios.get(`http://localhost:5000/buylist/${params.id}`, {withCredentials: true});
+        console.log(res.data);
+        setBuyList(res.data)
     }
 
 
@@ -65,16 +75,16 @@ function BuyList(){
             </Card>
         </Link>
         <div><Button className = "buyList_delete" onClick = {() => deleteData(data._id)}> DELETE</Button>
-                <Button className = "buyList_buy">BUY</Button></div>
+                <Button className = "buyList_buy" onClick = {() => buy(data._id)}>BUY</Button></div>
         <div><Button block ={true} onClick = {() =>viewReviewModal()}>Review</Button></div>
-         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review}/>         
+         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review}/>
         </div>
     }
 
 
 
     const CardIfViewer = (data) => {
-        return <div>
+        return <div className = "card_if_viewer">
             <Link to = {{ pathname: `/details/${data.product._id}` }}>
         <Card
                 style={{ width: 250 }}
@@ -87,12 +97,12 @@ function BuyList(){
             <div>{data.product.description}</div>
             </Card>
         </Link>
-        <div><Button onClick = {() => isopen()} > Review</Button></div>
+        <div><Button className = "review_button" block = {true} onClick = {() => isopen()} > Review</Button></div>
         <PostReviewModal isVisible = {isModalVisible} onHide = {isClose} productId = {data.product._id} userId = {params.id}  />
         </div>
     }
 
-    useEffect(async () => { 
+    useEffect(async () => {
         getBuyListdata(params.id);
         checkIsSelfProfile();
        }, [params]);

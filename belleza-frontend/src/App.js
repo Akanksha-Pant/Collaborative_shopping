@@ -1,5 +1,5 @@
 import './App.css';
-import { 
+import {
   BrowserRouter as Router,
   Switch,
   Route
@@ -36,10 +36,10 @@ function App() {
           <Route path="/profile/:id"><FriendComponent /></Route>
           <Route path="/profile"><Profile />
           </Route><Route path="/findfriend"><FindFriend /></Route>
-          <Route exact path="/"><Main /></Route> 
-          <Route path="">error page</Route>       
+          <Route exact path="/"><Main /></Route>
+          <Route path="">error page</Route>
         </Switch>
-        <Footer />
+      
       </Router>
     </div>
   );

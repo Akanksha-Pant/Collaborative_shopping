@@ -11,7 +11,7 @@ import getCurrentUser from "./../../services/currentUser";
 
 function CurrentUserDetails ({currentUser}) {
   // console.log(currentUser)
-  if (!currentUser) 
+  if (!currentUser)
     return (
     <Link to="/login">
        <Button> Login</Button>
@@ -30,12 +30,12 @@ function Header() {
   useEffect(() => {
       getCurrentUser().then((data) =>{
         setCurrentUser(data);
-      }); 
+      });
   });
   const handleClick = (e) => {
     setCurrentTab(e.key);
   }
-  
+
     return (
       <Space className="Header">
           <Menu className="menu" onClick={handleClick} selectedKeys={[currentTab]} mode="horizontal">
@@ -57,5 +57,5 @@ function Header() {
       </Space>
     );
   }
-  
+
 export default Header;
