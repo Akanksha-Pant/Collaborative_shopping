@@ -661,6 +661,8 @@ app.get("/buylist/buy/:id", function(req, res){
   Buylist.find({
     _id: req.params.id
   }, function(err, item) {
+    item = item[0];
+    console.log(item);
     const bought = new Boughtlist({
       userId: item.userId,
       product: item.product
@@ -669,14 +671,14 @@ app.get("/buylist/buy/:id", function(req, res){
       if (err) {
         console.log(err);
       } else {
-        console.log("Product added to buylist");
+        console.log("Product added to boughtlist");
 
         axios({
           method: "GET",
           withCredentials: true,
           url: "http://localhost:5000/buylist/delete/" + item._id
         })
-        console.log(product);
+        
 
       }
     })

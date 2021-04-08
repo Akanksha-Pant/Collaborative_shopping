@@ -41,6 +41,7 @@ function BuyList(){
     const buy = async(id) =>{
         axios.get(`http://localhost:5000/buylist/buy/${id}`, {withCredentials: true})
         const res = await axios.get(`http://localhost:5000/buylist/${params.id}`, {withCredentials: true});
+        console.log(res.data);
         setBuyList(res.data)
     }
 
@@ -85,7 +86,7 @@ function BuyList(){
     const CardIfViewer = (data) => {
         return <div className = "card_if_viewer">
             <Link to = {{ pathname: `/details/${data.product._id}` }}>
-        <Card 
+        <Card
                 style={{ width: 250 }}
                 cover={
                   <img
