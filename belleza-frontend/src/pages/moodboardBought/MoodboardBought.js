@@ -34,7 +34,7 @@ function BoughtList(){
         getBoughtList();
     },[])
     console.log(params.id)
-    return <div>{boughtlist.map(ViewerCard)}</div>
+    return <div className = "buyList">{boughtlist.map(ViewerCard)}</div>
 }
 
 export default BoughtList;

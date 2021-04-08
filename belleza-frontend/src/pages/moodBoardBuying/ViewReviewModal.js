@@ -1,5 +1,5 @@
 import {useState, useEffect} from 'react';
-import {Modal, List} from 'antd';
+import {Modal, List, Rate} from 'antd';
 
 
 function ViewReviewsModal(props){
@@ -10,11 +10,14 @@ function ViewReviewsModal(props){
        }, [reviewList]);
        console.log(reviewList.length);
     const reviewCard = (data) =>{
-        return (<div>{data.friendName} {data.text}</div>)
+        return (<div><div>{data.friendName}</div>
+                <div>{data.text}</div>
+         </div>
+            )
     }
 
        return<Modal visible = {props.visible} onCancel = {() => props.onHide()}>
-           <div>Hellooo from Modal</div>
+           <div>Reviews</div>
            <div> {reviewList.map(reviewCard)}</div>
        </Modal>
 
