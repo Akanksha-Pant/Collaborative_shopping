@@ -54,9 +54,9 @@ function WishList(){
 
 
         }
-        return <div><Link to = {{ pathname: `/details/${data.product._id}` }}>
-                <Card
-                style={{ width: 250 }}
+        return <div className = "card_if_accountHolder"><Link to = {{ pathname: `/details/${data.product._id}` }}>
+                <Card 
+                style={{ width: 240 }}
                 cover={
                   <img
                     src={data.product.image}
@@ -66,7 +66,7 @@ function WishList(){
             <div>{data.product.description}</div>
             </Card>
         </Link>
-        <div><Button onClick = {() =>deleteItem()}> DELETE</Button><Button  onClick = {() =>buyItem()}>BUYBOARD</Button></div>
+        <div><Button className = "buyList_delete"onClick = {() =>deleteItem()}> DELETE</Button><Button className = "buyList_buyBoard" onClick = {() =>buyItem()}>BUYBOARD</Button></div>
         </div>
     }
 

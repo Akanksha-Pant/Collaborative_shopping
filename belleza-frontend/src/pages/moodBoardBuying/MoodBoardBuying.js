@@ -74,9 +74,9 @@ function BuyList(){
 
 
     const CardIfViewer = (data) => {
-        return <div>
+        return <div className = "card_if_viewer">
             <Link to = {{ pathname: `/details/${data.product._id}` }}>
-        <Card
+        <Card 
                 style={{ width: 250 }}
                 cover={
                   <img
@@ -87,7 +87,7 @@ function BuyList(){
             <div>{data.product.description}</div>
             </Card>
         </Link>
-        <div><Button onClick = {() => isopen()} > Review</Button></div>
+        <div><Button className = "review_button" block = {true} onClick = {() => isopen()} > Review</Button></div>
         <PostReviewModal isVisible = {isModalVisible} onHide = {isClose} productId = {data.product._id} userId = {params.id}  />
         </div>
     }
