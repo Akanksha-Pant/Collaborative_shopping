@@ -38,6 +38,12 @@ function BuyList(){
 
     }
 
+    const buy = async(id) =>{
+        axios.get(`http://localhost:5000/buylist/buy/${id}`, {withCredentials: true})
+        const res = await axios.get(`http://localhost:5000/buylist/${params.id}`, {withCredentials: true});
+        setBuyList(res.data)
+    }
+
 
     const isopen = () => {
         setIsModalVisible(true)
@@ -68,7 +74,7 @@ function BuyList(){
             </Card>
         </Link>
         <div><Button className = "buyList_delete" onClick = {() => deleteData(data._id)}> DELETE</Button>
-                <Button className = "buyList_buy">BUY</Button></div>
+                <Button className = "buyList_buy" onClick = {() => buy(data._id)}>BUY</Button></div>
         <div><Button block ={true} onClick = {() =>viewReviewModal()}>Review</Button></div>
          <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review}/>
         </div>
