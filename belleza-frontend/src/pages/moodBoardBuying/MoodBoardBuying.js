@@ -2,7 +2,7 @@ import {useState, useEffect} from 'react'
 import {useParams, Link} from 'react-router-dom';
 import getCurrentUser from "./../../services/currentUser";
 import "./moodBoardBuying.css"
-import {Card, Button, Modal} from 'antd'
+import {Card, Button, Modal, Rate} from 'antd'
 import PostReviewModal from './PostReviewModal'
 import ViewReviewsModal from './ViewReviewModal'
 import axios from 'axios'
@@ -74,6 +74,7 @@ function BuyList(){
             <div>{data.product.description}</div>
             </Card>
         </Link>
+        <Rate disabled defaultValue = {data.rating.avg}/>
         <div><Button className = "buyList_delete" onClick = {() => deleteData(data._id)}> DELETE</Button>
                 <Button className = "buyList_buy" onClick = {() => buy(data._id)}>BUY</Button></div>
         <div><Button block ={true} onClick = {() =>viewReviewModal()}>Review</Button></div>
