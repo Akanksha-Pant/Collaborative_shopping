@@ -477,43 +477,44 @@ app.get("/wishlist/buy/:id", function(req, res) {
   Wishlist.find({
     _id: req.params.id
   }, function(err, item) {
-    if (err){
+    if (err) {
       console.log(err);
+    } else {
+
+
+      item = item[0];
+      console.log(item);
+      const buy = new Buylist({
+        userId: item.userId,
+        product: item.product,
+        productId: item.product._id,
+        rating: {
+          avg: 0,
+          no: 0,
+          sum: 0
+        }
+      })
+      buy.save((err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Product added to buylist");
+
+          axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/wishlist/delete/" + item._id
+          })
+          console.log(item);
+          axios.post(`http://localhost:5000/notification/add/${item.userId}`, {
+            productName: item.product.name
+          }, {
+            withCredentials: true
+          });
+
+        }
+      })
     }
-    else{
-
-
-    item = item[0];
-    console.log(item);
-    const buy = new Buylist({
-      userId: item.userId,
-      product: item.product,
-      productId: item.product._id,
-      rating: {
-        avg: 0,
-        no: 0,
-        sum: 0
-      }
-    })
-    buy.save((err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Product added to buylist");
-
-        axios({
-          method: "GET",
-          withCredentials: true,
-          url: "http://localhost:5000/wishlist/delete/" + item._id
-        })
-        console.log(item);
-        axios.post(`http://localhost:5000/notification/add/${item.userId}`,{
-          productName: item.product.name
-        }, { withCredentials: true });
-
-      }
-    })
-  }
   })
 })
 
@@ -663,32 +664,37 @@ app.get("/buylist/delete/:id", function(req, res) {
   })
 })
 
-app.get("/buylist/buy/:id", function(req, res){
+app.get("/buylist/buy/:id", function(req, res) {
 
   Buylist.find({
     _id: req.params.id
   }, function(err, item) {
-    item = item[0];
-    console.log(item);
-    const bought = new Boughtlist({
-      userId: item.userId,
-      product: item.product
-    })
-    bought.save((err) => {
-      if (err) {
-        console.log(err);
-      } else {
-        console.log("Product added to boughtlist");
+    if (err) {
+      console.log(err);
+    } else {
+      item = item[0];
+      console.log(item);
+      const bought = new Boughtlist({
+        userId: item.userId,
+        product: item.product
+      })
+      bought.save((err) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log("Product added to boughtlist");
 
-        axios({
-          method: "GET",
-          withCredentials: true,
-          url: "http://localhost:5000/buylist/delete/" + item._id
-        })
+          axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/buylist/delete/" + item._id
+          })
+        }
+      })
+    }
 
 
-      }
-    })
+
   })
 
 })
