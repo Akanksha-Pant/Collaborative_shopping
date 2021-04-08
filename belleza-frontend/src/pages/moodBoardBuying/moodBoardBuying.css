@@ -1,0 +1,26 @@
+.buyList{
+    width: 100%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
+
+.card_if_accountHolder{
+    width: 250px;
+    border-style: groove;
+}
+
+.buyList_delete{
+    width: 40%;
+    margin-right:10px ;
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: darkviolet;
+    color: white;
+}
+
+.buyList_buy{
+    background-color: darkviolet;
+    color: white;
+    width: 40%;
+    
+}
