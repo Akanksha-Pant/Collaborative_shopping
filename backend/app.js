@@ -518,6 +518,22 @@ app.get("/wishlist/buy/:id", function(req, res) {
   })
 })
 
+app.get("/wishlist/check/:userId/:productId", function(req, res){
+  Wishlist.find({userId: req.params.userId, "product._id": req.params.productId}, function(err, prod){
+    if (err){
+      console.log(err);
+    }
+    else{
+      if (prod.length == 0){
+        res.send(false);
+      }
+      else{
+        res.send(true);
+      }
+    }
+  })
+})
+
 //Buylist routes -----------------------------------------
 
 app.post("/buylist/add", function(req, res) {
@@ -697,6 +713,22 @@ app.get("/buylist/buy/:id", function(req, res) {
 
   })
 
+})
+
+app.get("/buylist/check/:userId/:productId", function(req, res){
+  Buylist.find({userId: req.params.userId, productId: req.params.productId}, function(err, prod){
+    if (err){
+      console.log(err);
+    }
+    else{
+      if (prod.length == 0){
+        res.send(false);
+      }
+      else{
+        res.send(true);
+      }
+    }
+  })
 })
 
 
