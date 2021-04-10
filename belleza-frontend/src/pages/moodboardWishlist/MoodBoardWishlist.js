@@ -45,7 +45,8 @@ function WishList(){
 
         const buyItem =async () => {
             const ifInBuylist = await axios.get(`http://localhost:5000/buylist/check/${params.id}/${data.product._id}`);
-            if(ifInBuylist){
+              //console.log(ifInBuylist);
+            if(ifInBuylist.data){
                 toast("This item is already in your buylist");
             }
             else{
@@ -59,7 +60,7 @@ function WishList(){
 
         }
         return <div className = "card_if_accountHolder"><Link to = {{ pathname: `/details/${data.product._id}` }}>
-                <Card 
+                <Card
                 style={{ width: 240 }}
                 cover={
                   <img
