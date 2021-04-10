@@ -1,11 +1,12 @@
 import { Card , Button} from 'antd';
 import {useState, useEffect} from 'react'
 import {useParams, Link} from 'react-router-dom';
+import { ToastContainer, toast } from 'react-toastify';
 import axios from 'axios';
 import "./MoodBoardWishlist.css"
 import getCurrentUser from "./../../services/currentUser";
 
-
+toast.configure({hideProgressBar: true})
 
 function CardIfViewer(data){
     return <Link to = {{ pathname: `/details/${data.product._id}` }}>
@@ -43,15 +44,18 @@ function WishList(){
         }
 
         const buyItem =async () => {
-          console.log(data);
-            axios.get(`http://localhost:5000/wishlist/buy/${data._id}`,
-            {withCredentials: true})
-
-            let res = await axios.get(`http://localhost:5000/wishlist/${params.id}`,{withCredentials: true})
-            console.log(res);
-            setwishListProduct(res.data)
-            console.log(wishListProduct);
-
+            const ifInBuylist = await axios.get(`http://localhost:5000/buylist/check/${params.id}/${data.product._id}`);
+            if(ifInBuylist){
+                toast("This item is already in your buylist");
+            }
+            else{
+              axios.get(`http://localhost:5000/wishlist/buy/${data._id}`,
+              {withCredentials: true})
+              let res = await axios.get(`http://localhost:5000/wishlist/${params.id}`,{withCredentials: true})
+              console.log(res);
+              setwishListProduct(res.data)
+              console.log(wishListProduct);
+            }
 
         }
         return <div className = "card_if_accountHolder"><Link to = {{ pathname: `/details/${data.product._id}` }}>

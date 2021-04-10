@@ -73,23 +73,34 @@ function ProductPage() {
   }
 
   function MoodBoardModal(props){
-
-
     const addToWishList = async() =>{
-      const res = await axios.post("http://localhost:5000/wishlist/add",{
-        userId: props.userId,
-        product: props.product
-      },{withCredentials: true});
-      console.log(res)
+      const inWishlist = await axios.get(`http://localhost:5000/wishlist/check/${props.userId}/${props.product._id}`)
+      if(inWishlist.data){
+          toast("This item is already present in your wishlist!");
+      }
+      else{
+        const res = await axios.post("http://localhost:5000/wishlist/add",{
+          userId: props.userId,
+          product: props.product
+        },{withCredentials: true}).then(toast("Item is successfully added to your wishlist"));
+        console.log(res)
+      }
+     
     }
 
     const addToBuyBoard = async() =>{
-      const res = await axios.post("http://localhost:5000/buylist/add",{
+      const ifInBuylist = await axios.get(`http://localhost:5000/buylist/check/${props.userId}/${props.product._id}`);
+      if(ifInBuylist.data){
+          toast("This item is already present in your buylist!");
+      }
+      else{
+        const res = await axios.post("http://localhost:5000/buylist/add",{
         productId:props.product._id,
         userId: props.userId,
         product: props.product
-      },{withCredentials: true});
+      },{withCredentials: true}).then(toast("This item has been successfully added to your buylist"));
       console.log(res)
+      }
     }
 
     return(<Modal visible = {props.isVisible} onCancel = {() => props.onHide()} onHide = {() => props.onHide()} onOk ={() => props.onHide()} >
