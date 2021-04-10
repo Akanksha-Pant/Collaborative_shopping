@@ -722,6 +722,7 @@ app.get("/buylist/check/:userId/:productId", function(req, res){
     }
     else{
       if (prod.length == 0){
+        console.log(prod);
         res.send(false);
       }
       else{
