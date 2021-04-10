@@ -2,3 +2,6 @@
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
 }
+.BoughtList{
+    padding: 0 200px 0 250px;
+}

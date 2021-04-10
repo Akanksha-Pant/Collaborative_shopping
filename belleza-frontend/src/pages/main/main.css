@@ -1,3 +1,6 @@
+.Main {
+    padding: 0 230px 0 230px;
+}
 .grid{
     width: 100%;
     display: grid;

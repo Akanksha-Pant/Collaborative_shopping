@@ -25,17 +25,21 @@ function SuggestionBox(){
 
     const suggestionBoardCard = (suggestion) => {
         return <div className = "suggestion_box_card">
-        <div className = "suggested_by">{`${suggestion.friendName} suggested this!`}</div>
-        <img className = "suggestion_box_image" src = {suggestion.product.image}/>
-        <div className = "suggestion_box_name">{suggestion.product.name}</div>
-        <div className = "suggestion_box_description">{suggestion.product.description}</div>
-        <div className = "button_bar">
-            <button className = "suggest_delete_btn" onClick = {() => deleteSuggestions(suggestion._id)}>DELETE</button>
-            <Link to = {{pathname: `details/${suggestion.product._id}`}}> <button className = "suggest_view_btn">VIEW</button></Link>
-        </div>
-
-        </div>
+                <div className = "suggested_by">{`${suggestion.friendName} suggested this!`}</div>
+                <img className = "suggestion_box_image" src = {suggestion.product.image}/>
+                <div className = "suggestion_box_name">{suggestion.product.name}</div>
+                <div className = "suggestion_box_description">{suggestion.product.description}</div>
+                <div className = "button_bar">
+                    <button className = "suggest_delete_btn" onClick = {() => deleteSuggestions(suggestion._id)}>DELETE</button>
+                    <Link to = {{pathname: `details/${suggestion.product._id}`}}> <button className = "suggest_view_btn">VIEW</button></Link>
+                </div>
+            </div>
     }
-    return <div className = "suggestion_box_page">{suggestions.map(suggestionBoardCard)}</div>
+    return <div>
+        <div style={{marginBottom: "20px"}}  className="background-purple">
+                <h2 className="text-style">Suggestions</h2>
+            </div>
+            <div style={{padding: "0 200px 0 200px"}}  className = "suggestion_box_page">{suggestions.map(suggestionBoardCard)}</div>
+        </div>
 }
 export default SuggestionBox;

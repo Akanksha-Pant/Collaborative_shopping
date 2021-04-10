@@ -31,7 +31,7 @@ function MoodboardCard({name, imageURL}) {
 
 function SuggestionBoard({isSelf}) {
     if (isSelf == true) {
-        return <Link to="/suggestionBox"><Card className="suggestion-card border-thick">Suggestion From Friends</Card></Link>
+        return <Link to="/suggestionBox"><Card className="suggestion-card border-thick">FRIEND'S SUGGESTIONS</Card></Link>
     }
     return "";
 }
@@ -97,9 +97,9 @@ function Profile({isSelfProfile = false, user}) {
             </div>
 
             <Row className="moodboard-container">
-                <Link to = {{pathname: `/boughtList/${user._id}`}} ><Col span={8}><MoodboardCard name="Brought" imageURL={BroughtIcon} /></Col></Link>
-                <Link to = {{pathname: `/buyList/${user._id}`}}><Col span={8}><MoodboardCard name="Buying" imageURL={BuyingIcon} /></Col></Link>
-                <Link to ={{ pathname: `/wishList/${user._id}`,}}><Col span={8}><MoodboardCard name="Wishlist" imageURL={WishlistIcon} /></Col></Link>
+                <Link style={{marginRight: "25px"}} to = {{pathname: `/boughtList/${user._id}`}} ><Col span={8}><MoodboardCard name="Brought" imageURL={BroughtIcon} /></Col></Link>
+                <Link style={{marginRight: "25px"}} to = {{pathname: `/buyList/${user._id}`}}><Col span={8}><MoodboardCard name="Buying" imageURL={BuyingIcon} /></Col></Link>
+                <Link style={{marginRight: "25px"}} to ={{ pathname: `/wishList/${user._id}`,}}><Col span={8}><MoodboardCard name="Wishlist" imageURL={WishlistIcon} /></Col></Link>
             </Row>
             <div className="">
                 <SuggestionBoard isSelf={isSelfProfile} />

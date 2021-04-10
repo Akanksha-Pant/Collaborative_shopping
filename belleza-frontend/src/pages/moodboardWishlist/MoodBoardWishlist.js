@@ -92,10 +92,22 @@ function WishList(){
       }, []);
 
     if(isSelfProfile){
-        return (<div className = "wishList">{wishListProduct.map(CardIfAccountHolder)}</div>);
+        return (<div >
+          <div style={{marginBottom: "20px"}} className="background-purple">
+                <h2 className="text-style">Wishlist items</h2>
+            </div>
+            <div style={{padding: "0 200px 0 200px"}} className = "wishList">{wishListProduct.map(CardIfAccountHolder)}</div>
+            </div>
+          );
     }
    else{
-       return   (<div className = "wishList">{wishListProduct.map(CardIfViewer)}</div>)
+       return   (<div>
+        <div style={{marginBottom: "20px"}} className="background-purple">
+              <h2 className="text-style">Wishlist items</h2>
+          </div>
+          <div style={{padding: "0 200px 0 200px"}} className = "wishList">{wishListProduct.map(CardIfViewer)}</div>
+         </div>
+         )
    }
 }
 

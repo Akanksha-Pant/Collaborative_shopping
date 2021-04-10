@@ -1,5 +1,9 @@
 @import '~antd/dist/antd.css';
 
+body {
+  @primary-color: rgb(162, 129, 175); 
+  @link-color: #f0f0f3; 
+}
 .App {
   text-align: center;
 }

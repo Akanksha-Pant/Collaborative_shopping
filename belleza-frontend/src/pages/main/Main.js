@@ -54,7 +54,7 @@ function MainPage() {
   for(var i = 0; i < products.length; i++){
     items.push(products[i]);
   }  
-  return <div className = "grid">{items.map(ProductCard)}</div>;
+  return <div className = "grid Main">{items.map(ProductCard)}</div>;
 }
   
 export default Main;

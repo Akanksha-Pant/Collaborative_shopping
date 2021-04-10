@@ -34,7 +34,12 @@ function BoughtList(){
         getBoughtList();
     },[])
     console.log(params.id)
-    return <div className = "buyList">{boughtlist.map(ViewerCard)}</div>
+    return <div>
+           <div style={{marginBottom: "20px"}}  className="background-purple">
+                <h2 className="text-style">Brought items</h2>
+            </div>
+            <div style={{padding: "0 200px 0 200px"}}  className = "buyList BoughtList">{boughtlist.map(ViewerCard)}</div>
+    </div> 
 }
 
 export default BoughtList;

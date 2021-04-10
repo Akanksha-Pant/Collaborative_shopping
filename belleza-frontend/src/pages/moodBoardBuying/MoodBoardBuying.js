@@ -109,10 +109,20 @@ function BuyList(){
        }, [params]);
 
     if(isSelfProfile){
-        return <div className = "buyList">{buyList.map(CardIfAccountHolder)}</div>;
+        return <div>
+            <div style={{marginBottom: "20px"}} className="background-purple">
+                <h2 className="text-style">Buying items</h2>
+            </div>
+            <div style={{padding: "0 200px 0 200px"}}  className = "buyList">{buyList.map(CardIfAccountHolder)}</div>;
+            </div>
     }
     else{
-        return <div className = "buyList">{buyList.map(CardIfViewer)}</div>;
+        return <div>
+            <div style={{marginBottom: "20px"}} className="background-purple">
+                <h2 className="text-style">Buying items</h2>
+            </div>
+            <div style={{padding: "0 200px 0 200px"}}  className = "buyList">{buyList.map(CardIfViewer)}</div>;
+            </div>
     }
 }
 export default BuyList;
