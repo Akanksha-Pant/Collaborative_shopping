@@ -6,14 +6,18 @@ import getCurrentUser from "./../../services/currentUser";
 
 
 function Main() {
-  const [ currentUser, setCurrentUser ] = useState(null);
+  const [ currentUser, setCurrentUser ] = useState("user");
 
-  getCurrentUser().then((data) =>{
-      console.log(data)
-      console.log("sjg")
-      setCurrentUser(data)
-    });
-  if(!currentUser) window.location.href = "/login";
+  // // useEffect(() => {
+  // getCurrentUser().then((data) =>{
+  //     console.log(data)
+  //     console.log("sjg")
+  //     setCurrentUser(data)
+  // });
+// }, []);
+  // console.log(currentUser)
+  // if(currentUser == "user") window.location.href = "/login";
+  // if(!currentUser);
 
   return <MainPage />;
 }
