@@ -3,6 +3,7 @@ import './suggestProduct.css'
 import {useParams, Link} from 'react-router-dom';
 import getCurrentUser from "./../../services/currentUser";
 import React , {useContext, useEffect, useState } from 'react';
+import {toast} from 'react-toastify';
 
 
 
@@ -24,7 +25,7 @@ function SuggestProduct() {
       friendId: currUser._id,
       friendName: currUser.username,
       product: detailProduct,
-    }, { withCredentials: true });
+    }, { withCredentials: true }).then(toast("This product is successfully added to you friend's suggestion box"));
     console.log(res);
   }
 

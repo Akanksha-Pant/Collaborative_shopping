@@ -31,7 +31,7 @@ function SuggestionBox(){
         <div className = "suggestion_box_description">{suggestion.product.description}</div>
         <div className = "button_bar">
             <button className = "suggest_delete_btn" onClick = {() => deleteSuggestions(suggestion._id)}>DELETE</button>
-            <button className = "suggest_view_btn"><Link to = {{pathname: `details/${suggestion.product._id}`}}>VIEW</Link></button>
+            <Link to = {{pathname: `details/${suggestion.product._id}`}}> <button className = "suggest_view_btn">VIEW</button></Link>
         </div>
 
         </div>

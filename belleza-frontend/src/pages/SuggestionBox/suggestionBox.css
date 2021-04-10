@@ -6,25 +6,27 @@
 
 .suggestion_box_card{
 width: 250px;
-height: 340px;
-padding: 10px;
+height: 380px;
+padding: 7px;
 margin-top: 40px ;
 box-shadow: 2px 4px 8px 2px rgba(0,0,0,0.2);
 }
 
 .suggested_by{
+    margin-bottom: 5px;
     margin-left: 20px;
     text-align: left;
     font-weight: bold; 
 }
 
 .suggestion_box_image{
-height: 200px;
+height: 220px;
 width: 180px;
 }
 
 .suggestion_box_description{
 text-align: left;
+height:  40px;
 }
 
 .suggestion_box_name{
