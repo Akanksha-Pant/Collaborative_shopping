@@ -78,7 +78,7 @@ function BuyList(){
         <div><Button className = "buyList_delete" onClick = {() => deleteData(data._id)}> DELETE</Button>
                 <Button className = "buyList_buy" onClick = {() => buy(data._id)}>BUY</Button></div>
         <div><Button block ={true} onClick = {() =>viewReviewModal()}>Review</Button></div>
-         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review}/>
+         <ViewReviewsModal visible = {isViewReviewVisible} onHide = {hideReviewModal} reviewList ={data.review} rating = {data.rating.avg}/>
         </div>
     }
 
