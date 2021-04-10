@@ -6,6 +6,7 @@ import { Link } from "react-router-dom";
 import BroughtIcon from "./brought.svg";
 import WishlistIcon from "./wishlist.svg";
 import ProfileIcon from "./profile.jpeg";
+import axios from "axios";
 
 const { Search } = Input;
 
@@ -38,6 +39,15 @@ function SuggestionBoard({isSelf}) {
 function FriendComponent(user) {
     const [isModalVisible, setIsModalVisible] = useState(false);
 
+    const logoutUser = () => {
+        axios({
+            method: "GET",
+            withCredentials: true,
+            url: "http://localhost:5000/logout"
+          }).then((res) =>  window.location.href = "/login")
+          .catch((err) => console.log(err));
+    }
+
     const redirectToFriend = (id) => {
         window.location.href = "/profile/" + id;
     }
@@ -58,7 +68,8 @@ function FriendComponent(user) {
         <div>
             {/* <Button className="button-purple" onClick={showModal}><img style={{height:"inherit"}} src={ProfileIcon} /></Button> */}
             <Button className="button-purple" onClick={showModal}>Friends: {user.user.friends.length}</Button>
-            {console.log(user.user.friends)}
+            <Button className="button-purple" onClick={logoutUser}>Logout</Button>
+            {/* {console.log(user.user.friends)} */}
             <Modal
              title={<Search style={{ width: "90%" }} placeholder="Search for friends"  enterButton />}
              visible={isModalVisible} onOk={handleOk} onCancel={handleCancel}>

@@ -16,7 +16,18 @@ function Signup() {
       },
       withCredentials: true,
       url: "http://localhost:5000/register"
-    }).then((res) => console.log(res));
+    }).then((res) =>  {
+      axios({
+        method: "POST",
+        data: {
+          username: values.username,
+          password: values.password
+        },
+        withCredentials: true,
+        url: "http://localhost:5000/login"
+      }).then((res) =>  window.location.href = "/profile")
+      .catch((err) => console.log(err));
+    })
   }
   const submitFormFailed = (error) => {
     console.error(error);
