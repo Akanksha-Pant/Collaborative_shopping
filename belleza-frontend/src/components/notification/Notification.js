@@ -1,22 +1,25 @@
 import { useState, useEffect } from "react";
 import { BellOutlined, CloseOutlined } from '@ant-design/icons';
 import { Button, Dropdown, List, Menu, notification, Space } from "antd";
+import getCurrentUser from "./../../services/currentUser";
 import axios from "axios"
 
 function Notification() {
     const [notifs, setNotifs] = useState([])
+
+    // const [ currentUser, setCurrentUser ] = useState();
+
+    // getCurrentUser().then((data) =>{
+    //     if(!data) setCurrentUser("none");
+    // });
+   
+    // return ""
     useEffect(async () => {
         getNotifications()
     }, [])
-    
-    async function pushNotifications() {
-        await axios({
-            method: "POST",
-            withCredentials: true,
-            data:{ productName:"Antheia" },
-            url: "http://localhost:5000/notification/add"
-        }).then(() => console.log("done"))
-    }
+    // if (currentUser == "none") {
+    //     return ""
+    // } 
     async function deleteNotification(id) {
         await axios({
             method: "GET",

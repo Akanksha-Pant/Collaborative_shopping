@@ -6,6 +6,7 @@ async function getCurrentUser() {
         withCredentials: true,
         url: "http://localhost:5000/profile"
       })
+    if (!response.data) return null; 
     return response.data;
 }
 
